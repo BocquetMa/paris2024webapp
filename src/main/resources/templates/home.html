@@ -25,9 +25,39 @@
 	.special {
 		padding-top:50px;
 	}
+	.notification {
+		position: fixed;
+		top: 10px;
+		right: 10px;
+		z-index: 1000;
+		padding: 15px;
+		background-color: #d9534f;
+		color: white;
+		border-radius: 5px;
+		display: none;
 </style>
 </head>
 <body>
+<div class="notification" id="notification"></div>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<script>
+	function showNotification(message) {
+		var notification = $('#notification');
+		notification.text(message);
+		notification.fadeIn(300).delay(2000).fadeOut(300);
+	}
+
+	$(document).ready(function() {
+		$('a.btn-danger').on('click', function(event) {
+			if (!confirm('Êtes-vous sûr de vouloir supprimer cet athlète ?')) {
+				event.preventDefault();
+			} else {
+				showNotification('Athlète supprimé avec succès.');
+			}
+		});
+	});
+</script>
 
 	<nav class="navbar navbar-inverse navbar-fixed-top">
 		<div class="container">
