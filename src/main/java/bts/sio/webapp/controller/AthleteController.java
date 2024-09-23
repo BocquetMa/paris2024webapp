@@ -1,9 +1,12 @@
 package bts.sio.webapp.controller;
 
 import bts.sio.webapp.model.Athlete;
+import bts.sio.webapp.model.Olympiade;
 import bts.sio.webapp.model.Pays;
+import bts.sio.webapp.model.Sport;
 import bts.sio.webapp.service.AthleteService;
 import bts.sio.webapp.service.PaysService;
+import bts.sio.webapp.service.SportService;
 import lombok.Data;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -25,6 +28,9 @@ public class AthleteController {
     @Autowired
     private PaysService paysService;
 
+    @Autowired
+    private SportService sportService;
+
     @GetMapping("/")
     public String home(Model model) {
         Iterable<Athlete> listAthletes = athleteservice.getAthletes();
@@ -40,6 +46,9 @@ public class AthleteController {
         Iterable<Pays> listPays = paysService.getLesPays();
         model.addAttribute("listPays", listPays);
 
+        Iterable<Sport> listSport = sportService.getLesSports();
+        model.addAttribute("listSport", listSport);
+
         return "athlete/formNewAthlete";
     }
 
@@ -47,6 +56,8 @@ public class AthleteController {
     public String updateAthlete(@PathVariable("id") final int id, Model model) {
         Athlete a = athleteservice.getAthlete(id);
         model.addAttribute("athlete", a);
+        model.addAttribute("listPays", paysService.getLesPays());
+        model.addAttribute("listSport", sportService.getLesSports());
         return "athlete/formUpdateAthlete";
     }
 
@@ -54,6 +65,13 @@ public class AthleteController {
     public ModelAndView deleteAthlete(@PathVariable("id") final int id) {
         athleteservice.deleteAthlete(id);
         return new ModelAndView("redirect:/");
+    }
+    @PostMapping("/athlete/{id}/addOlympiade")
+    public ModelAndView addOlympiade(@PathVariable("id") int id, @ModelAttribute Olympiade olympiade) {
+        Athlete athlete = athleteservice.getAthlete(id);
+        athlete.getOlympiades().add(olympiade);
+        athleteservice.saveAthlete(athlete);
+        return new ModelAndView("redirect:/athlete/" + id);
     }
 
     @PostMapping("/saveAthlete")

@@ -13,12 +13,13 @@ public class SportService {
     @Autowired
     private SportProxy sportProxy;
 
-    public Sport getSport(final int id) {
-        return sportProxy.getSport(id);
+    // Méthode unique pour récupérer les sports
+    public Iterable<Sport> getLesSports() {
+        return sportProxy.getSports();
     }
 
-    public Iterable<Sport> getSports() {
-        return sportProxy.getSports();
+    public Sport getSport(final int id) {
+        return sportProxy.getSport(id);
     }
 
     public void deleteSport(final int id) {
@@ -26,18 +27,20 @@ public class SportService {
     }
 
     public Sport saveSport(Sport sport) {
-        Sport savedSport;
-
-        // Functional rule : Last name must be capitalized.
-        sport.setNom(sport.getNom().toUpperCase());
-
-        if(sport.getId() == null) {
-            // If id is null, then it is a new employee.
-            savedSport = sportProxy.createSport(sport);
-        } else {
-            savedSport = sportProxy.updateSport(sport);
+        // Validation simple
+        if (sport.getNom() == null || sport.getNom().trim().isEmpty()) {
+            throw new IllegalArgumentException("Le nom du sport ne peut pas être vide.");
         }
 
-        return savedSport;
+        // Mettez le nom en majuscules
+        sport.setNom(sport.getNom().toUpperCase());
+
+        if (sport.getId() == null) {
+            // Si l'id est null, il s'agit d'un nouveau sport
+            return sportProxy.createSport(sport);
+        } else {
+            return sportProxy.updateSport(sport);
+        }
     }
+
 }
