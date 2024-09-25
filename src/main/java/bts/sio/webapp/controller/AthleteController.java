@@ -59,6 +59,13 @@ public class AthleteController {
         return "athlete/formNewAthlete";
     }
 
+    @GetMapping("/consulterAthlete/{id}")
+    public String consulterAthlete(@PathVariable("id") final int id, Model model) {
+        Athlete a = athleteservice.getAthlete(id);
+        model.addAttribute("athlete", a);
+        return "athlete/consulterAthlete";
+    }
+
     @GetMapping("/updateAthlete/{id}")
     public String updateAthlete(@PathVariable("id") final int id, Model model) {
         Athlete a = athleteservice.getAthlete(id);
