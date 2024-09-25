@@ -17,9 +17,6 @@ public class Athlete {
     private Sport sport;
 
     private List<Olympiade> olympiades;
-
-
-
-
+    private List<Epreuve> epreuves;
 
 }

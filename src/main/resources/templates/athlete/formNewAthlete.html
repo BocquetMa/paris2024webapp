@@ -77,6 +77,14 @@ body {
 					</select>
 				</div>
 
+				<div class="form-group">
+					<label for="epreuve">Épreuves :</label>
+					<select id="epreuve" class="form-control" th:field="*{epreuves}">
+						<option th:each="epreuve : ${listEpreuve}"
+								th:value="${epreuve.id}"
+								th:text="${epreuve.libelle}"></option>
+					</select>
+				</div>
 
 				<button type="submit" class="btn btn-primary">Créer</button>
 			</form>

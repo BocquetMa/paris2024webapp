@@ -55,7 +55,6 @@ public class SportController {
         System.out.println("controller save=" + sport.getNom());
         if(sport.getId() != null) {
             Sport current = sportservice.getSport(sport.getId());
-            sport.setNom(current.getNom());
         }
         sportservice.saveSport(sport);
         return new ModelAndView("redirect:/");

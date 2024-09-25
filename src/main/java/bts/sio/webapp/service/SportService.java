@@ -27,16 +27,15 @@ public class SportService {
     }
 
     public Sport saveSport(Sport sport) {
-        // Validation simple
+
         if (sport.getNom() == null || sport.getNom().trim().isEmpty()) {
             throw new IllegalArgumentException("Le nom du sport ne peut pas être vide.");
         }
 
-        // Mettez le nom en majuscules
         sport.setNom(sport.getNom().toUpperCase());
 
         if (sport.getId() == null) {
-            // Si l'id est null, il s'agit d'un nouveau sport
+
             return sportProxy.createSport(sport);
         } else {
             return sportProxy.updateSport(sport);
