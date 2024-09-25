@@ -38,31 +38,14 @@
 </style>
 </head>
 <body>
-<div class="notification" id="notification"></div>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-<script>
-	function showNotification(message) {
-		var notification = $('#notification');
-		notification.text(message);
-		notification.fadeIn(300).delay(2000).fadeOut(300);
-	}
-
-	$(document).ready(function() {
-		$('a.btn-danger').on('click', function(event) {
-			if (!confirm('Êtes-vous sûr de vouloir supprimer cet athlète ?')) {
-				event.preventDefault();
-			} else {
-				showNotification('Athlète supprimé avec succès.');
-			}
-		});
-	});
-</script>
-
 	<nav class="navbar navbar-inverse navbar-fixed-top">
 		<div class="container">
 			<div class="navbar-header">
 				<a class="navbar-brand" href=".">Système de gestion des athlètes</a>
+				<a class="navbar-brand" href="/">Accueil</a>
+				<a class="navbar-brand" href="/athletes">Athletes</a>
+				<a class="navbar-brand" href="/sports">Sports</a>
+
 			</div>
 		</div>
 	</nav>
