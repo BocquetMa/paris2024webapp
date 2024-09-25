@@ -72,7 +72,7 @@
 					</tr>
 					<tr th:each="athlete: ${athletes}">
 						<td><span th:text="${athlete.prenom}"> Prenom </span></td>
-						<td><span th:text="${athlete.nom}"> Nom </span></td>
+						<td><a th:href="@{/consulterAthlete/{id}(id=${athlete.id})}"><span th:text="${athlete.nom}"> Nom </span></a></td>
 						<td><span th:text="${#temporals.format(athlete.datenaiss, 'dd-MM-yyyy HH:mm')}"> Date de naissance </span></td>
 						<td>
 							<span th:if="${athlete.pays != null}" th:text="${athlete.pays.nom}"></span>
