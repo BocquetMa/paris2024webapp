@@ -22,11 +22,11 @@ public class SportController {
     @Autowired
     private SportService sportservice;
 
-    @GetMapping("/s")
-    public String home(Model model) {
+    @GetMapping("/sports")
+    public String Sport(Model model) {
         Iterable<Sport> listSports = sportservice.getLesSports();
         model.addAttribute("sports", listSports);
-        return "home";
+        return "sport/formHomeSport";
     }
 
     @GetMapping("/createSport")
