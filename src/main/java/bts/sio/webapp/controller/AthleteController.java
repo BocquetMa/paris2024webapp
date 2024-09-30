@@ -1,9 +1,13 @@
 package bts.sio.webapp.controller;
 
 import bts.sio.webapp.model.Athlete;
+import bts.sio.webapp.model.Epreuve;
 import bts.sio.webapp.model.Pays;
+import bts.sio.webapp.model.Sport;
 import bts.sio.webapp.service.AthleteService;
 import bts.sio.webapp.service.PaysService;
+import bts.sio.webapp.service.SportService;
+import bts.sio.webapp.service.EpreuveService;
 import lombok.Data;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -25,6 +29,12 @@ public class AthleteController {
     @Autowired
     private PaysService paysService;
 
+    @Autowired
+    private SportService sportService;
+
+    @Autowired
+    private EpreuveService epreuveService;
+
     @GetMapping("/")
     public String home(Model model) {
         Iterable<Athlete> listAthletes = athleteservice.getAthletes();
@@ -40,13 +50,29 @@ public class AthleteController {
         Iterable<Pays> listPays = paysService.getLesPays();
         model.addAttribute("listPays", listPays);
 
+        Iterable<Sport> listSport = sportService.getLesSports();
+        model.addAttribute("listSport", listSport);
+
+        Iterable<Epreuve> listEpreuve = epreuveService.getLesEpreuves();
+        model.addAttribute("listEpreuve", listEpreuve);
+
         return "athlete/formNewAthlete";
+    }
+
+    @GetMapping("/consulterAthlete/{id}")
+    public String consulterAthlete(@PathVariable("id") final int id, Model model) {
+        Athlete a = athleteservice.getAthlete(id);
+        model.addAttribute("athlete", a);
+        return "athlete/consulterAthlete";
     }
 
     @GetMapping("/updateAthlete/{id}")
     public String updateAthlete(@PathVariable("id") final int id, Model model) {
         Athlete a = athleteservice.getAthlete(id);
         model.addAttribute("athlete", a);
+        model.addAttribute("listPays", paysService.getLesPays());
+        model.addAttribute("listSport", sportService.getLesSports());
+        model.addAttribute("listEpreuve", epreuveService.getLesEpreuves());
         return "athlete/formUpdateAthlete";
     }
 
@@ -55,13 +81,19 @@ public class AthleteController {
         athleteservice.deleteAthlete(id);
         return new ModelAndView("redirect:/");
     }
+    @PostMapping("/athlete/{id}/addEpreuve")
+    public ModelAndView addEpreuve(@PathVariable("id") int id, @ModelAttribute Epreuve epreuve) {
+        Athlete athlete = athleteservice.getAthlete(id);
+        athlete.getEpreuves().add(epreuve);
+        athleteservice.saveAthlete(athlete);
+        return new ModelAndView("redirect:/athlete/" + id);
+    }
 
     @PostMapping("/saveAthlete")
     public ModelAndView saveAthlete(@ModelAttribute Athlete athlete) {
         System.out.println("controller save=" + athlete.getNom());
         if(athlete.getId() != null) {
             Athlete current = athleteservice.getAthlete(athlete.getId());
-            athlete.setNom(current.getNom());
         }
         athleteservice.saveAthlete(athlete);
         return new ModelAndView("redirect:/");

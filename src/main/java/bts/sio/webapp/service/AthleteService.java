@@ -1,6 +1,7 @@
 package bts.sio.webapp.service;
 
 import bts.sio.webapp.model.Athlete;
+import bts.sio.webapp.model.Sport;
 import bts.sio.webapp.repository.AthleteProxy;
 import lombok.Data;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,6 +19,10 @@ public class AthleteService {
     }
 
     public Iterable<Athlete> getAthletes() {
+        return athleteProxy.getAthletes();
+    }
+
+    public Iterable<Athlete> getLesAthletes() {
         return athleteProxy.getAthletes();
     }
 

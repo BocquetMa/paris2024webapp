@@ -25,14 +25,27 @@
 	.special {
 		padding-top:50px;
 	}
+	.notification {
+		position: fixed;
+		top: 10px;
+		right: 10px;
+		z-index: 1000;
+		padding: 15px;
+		background-color: #d9534f;
+		color: white;
+		border-radius: 5px;
+		display: none;
 </style>
 </head>
 <body>
-
 	<nav class="navbar navbar-inverse navbar-fixed-top">
 		<div class="container">
 			<div class="navbar-header">
 				<a class="navbar-brand" href=".">Système de gestion des athlètes</a>
+				<a class="navbar-brand" href="/">Accueil</a>
+				<a class="navbar-brand" href="/athletes">Athletes</a>
+				<a class="navbar-brand" href="/sports">Sports</a>
+
 			</div>
 		</div>
 	</nav>
@@ -48,19 +61,30 @@
 						<th>Nom</th>
 						<th>Date de naissance</th>
 						<th>Pays</th>
+						<th>Sport</th>
+						<th>Olympiades</th>
 						<th>Action</th>
 					</tr>
 				</thead>
 				<tbody>
 					<tr th:if="${athletes.empty}">
-						<td colspan="3">Aucun athlète en base de données</td>
+						<td colspan="3">Aucun+- athlète en base de données</td>
 					</tr>
 					<tr th:each="athlete: ${athletes}">
 						<td><span th:text="${athlete.prenom}"> Prenom </span></td>
-						<td><span th:text="${athlete.nom}"> Nom </span></td>
-						<!--td><span th:text="${#dates.format(athlete.datenaiss, 'dd-MM-yyyy')}"> Nom </span></td-->
-						<td><span th:text="${#temporals.format(athlete.datenaiss, 'dd-MM-yyyy HH:mm')}"> Nom </span></td>
-						<td><span th:text="${athlete.pays.nom}"> Nom </span></td>
+						<td><a th:href="@{/consulterAthlete/{id}(id=${athlete.id})}"><span th:text="${athlete.nom}"> Nom </span></a></td>
+						<td><span th:text="${#temporals.format(athlete.datenaiss, 'dd-MM-yyyy HH:mm')}"> Date de naissance </span></td>
+						<td>
+							<span th:if="${athlete.pays != null}" th:text="${athlete.pays.nom}"></span>
+							<span th:if="${athlete.pays == null}">Aucun pays</span>
+						</td>
+
+						<td><span th:text="${athlete.sport.nom}"> Nom </span></td>
+						<td>
+							<ul class="olympiades-list" th:each="olympiade : ${athlete.olympiades}">
+								<li th:text="${olympiade.numero}"></li>
+							</ul>
+						</td>
 						<td>
 							<a th:href="@{/updateAthlete/{id}(id=${athlete.id})}"><button class="btn btn-info">Modifier</button></a>
 							<a th:href="@{/deleteAthlete/{id}(id=${athlete.id})}"><button class="btn btn-danger">Supprimer</button></a>
