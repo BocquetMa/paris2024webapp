@@ -3,6 +3,7 @@ package bts.sio.webapp.repository;
 
 import bts.sio.webapp.CustomProperties;
 import bts.sio.webapp.model.Actualite;
+import bts.sio.webapp.model.Athlete;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.ParameterizedTypeReference;
@@ -39,10 +40,21 @@ public class ActualiteProxy {
         return response.getBody();
     }
 
-    /**
-     * Get an athlete by the id
-     * @param id The id of the athlete
-     * @return The athlete which matches the id
-     */
+    public Actualite getActualite(int id) {
+        String baseApiUrl = props.getApiUrl();
+        String getActualiteUrl = baseApiUrl + "/actualite/" + id;
+
+        RestTemplate restTemplate = new RestTemplate();
+        ResponseEntity<Actualite> response = restTemplate.exchange(
+                getActualiteUrl,
+                HttpMethod.GET,
+                null,
+                Actualite.class
+        );
+
+        log.debug("Get Athlete call " + response.getStatusCode().toString());
+
+        return response.getBody();
+    }
 
 }
