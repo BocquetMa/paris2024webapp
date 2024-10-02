@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Ajouter Épreuves</title>
+</head>
+<body>
+<h1>Ajouter Épreuves à l'Athlète : <span th:text="${athlete.nom} + ' ' + ${athlete.prenom}"></span></h1>
+
+<form action="@{/athlete/{id}/epreuves(id=${athlete.id})}" method="post">
+    <label for="epreuves">Sélectionnez les épreuves :</label><br>
+    <select id="epreuves" name="epreuveIds" multiple>
+        <th:block th:each="epreuve : ${listEpreuve}">
+            <option th:value="${epreuve.id}" th:text="${epreuve.nom}"></option>
+        </th:block>
+    </select><br><br>
+    <button type="submit">Ajouter Épreuves</button>
+</form>
+
+<a href="@{/}">Retour à la liste des athlètes</a>
+</body>
+</html>
