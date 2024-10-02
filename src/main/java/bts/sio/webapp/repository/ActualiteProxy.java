@@ -3,10 +3,10 @@ package bts.sio.webapp.repository;
 
 import bts.sio.webapp.CustomProperties;
 import bts.sio.webapp.model.Actualite;
-import bts.sio.webapp.model.Athlete;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.ParameterizedTypeReference;
+import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
@@ -35,7 +35,7 @@ public class ActualiteProxy {
                 new ParameterizedTypeReference<Iterable<Actualite>>() {}
         );
 
-        log.debug("Get Athletes call " + response.getStatusCode().toString());
+        log.debug("Get Actualites call " + response.getStatusCode().toString());
 
         return response.getBody();
     }
@@ -52,7 +52,24 @@ public class ActualiteProxy {
                 Actualite.class
         );
 
-        log.debug("Get Athlete call " + response.getStatusCode().toString());
+        log.debug("Get Actualite call " + response.getStatusCode().toString());
+
+        return response.getBody();
+    }
+    public Actualite createActualite(Actualite a) {
+
+        String baseApiUrl = props.getApiUrl();
+        String createActualiteUrl = baseApiUrl + "/actualite";
+
+        RestTemplate restTemplate = new RestTemplate();
+        HttpEntity<Actualite> request = new HttpEntity<Actualite>(a);
+        ResponseEntity<Actualite> response = restTemplate.exchange(
+                createActualiteUrl,
+                HttpMethod.POST,
+                request,
+                Actualite.class);
+
+        log.debug("Create Athlete call " + response.getStatusCode().toString());
 
         return response.getBody();
     }
