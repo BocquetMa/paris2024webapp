@@ -33,6 +33,11 @@
                 <li th:text="${olympiade.numero}"></li>
             </ul>
         </h4>
+        <h4>Epreuves :
+            <ul th:each="epreuve : ${athlete.epreuves}">
+                <li th:text="${epreuve.libelle}"></li>
+            </ul>
+        </h4>
     </div>
 </div>
 

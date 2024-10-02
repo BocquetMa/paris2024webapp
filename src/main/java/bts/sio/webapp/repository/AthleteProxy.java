@@ -3,6 +3,7 @@ package bts.sio.webapp.repository;
 
 import bts.sio.webapp.CustomProperties;
 import bts.sio.webapp.model.Athlete;
+import bts.sio.webapp.model.Epreuve;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.ParameterizedTypeReference;
@@ -11,6 +12,8 @@ import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
+
+import java.util.List;
 
 @Slf4j
 @Component
@@ -102,6 +105,23 @@ public class AthleteProxy {
                 Athlete.class);
 
         log.debug("Update Athlete call " + response.getStatusCode().toString());
+
+        return response.getBody();
+    }
+
+    public Epreuve getEpreuve(int epreuveId) {
+        String baseApiUrl = props.getApiUrl();
+        String getEpreuveUrl = baseApiUrl + "/epreuve/" + epreuveId;
+
+        RestTemplate restTemplate = new RestTemplate();
+        ResponseEntity<Epreuve> response = restTemplate.exchange(
+                getEpreuveUrl,
+                HttpMethod.GET,
+                null,
+                Epreuve.class
+        );
+
+        log.debug("Get Epreuve call " + response.getStatusCode().toString());
 
         return response.getBody();
     }
