@@ -1,6 +1,7 @@
 package bts.sio.webapp.service;
 
 import bts.sio.webapp.model.Actualite;
+import bts.sio.webapp.model.Athlete;
 import bts.sio.webapp.repository.ActualiteProxy;
 import lombok.Data;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,4 +18,10 @@ public class ActualiteService {
     public Iterable<Actualite> getActualites() {
         return actualiteProxy.getActualites();
     }
+
+    public Actualite getActualite(final int id) {
+        return actualiteProxy.getActualite(id);
+    }
+
+
 }
