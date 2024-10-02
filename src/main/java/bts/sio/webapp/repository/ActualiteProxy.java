@@ -74,4 +74,21 @@ public class ActualiteProxy {
         return response.getBody();
     }
 
+    public Actualite updateActualite(Actualite e) {
+        String baseApiUrl = props.getApiUrl();
+        String updateActualiteUrl = baseApiUrl + "/actualite/" + e.getId();
+
+        RestTemplate restTemplate = new RestTemplate();
+        HttpEntity<Actualite> request = new HttpEntity<Actualite>(e);
+        ResponseEntity<Actualite> response = restTemplate.exchange(
+                updateActualiteUrl,
+                HttpMethod.PUT,
+                request,
+                Actualite.class);
+
+        log.debug("Update Actualite call " + response.getStatusCode().toString());
+
+        return response.getBody();
+    }
+
 }

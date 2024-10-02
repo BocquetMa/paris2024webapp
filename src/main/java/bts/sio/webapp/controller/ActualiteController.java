@@ -60,7 +60,16 @@ public class ActualiteController {
             Actualite current = actualiteservice.getActualite(actualite.getId());
         }
         actualiteservice.saveActualite(actualite);
-        return new ModelAndView("redirect:/");
+        return new ModelAndView("redirect:/actualites");
+    }
+
+    @GetMapping("/updateActualite/{id}")
+    public String updateActualite(@PathVariable("id") final int id, Model model) {
+        Actualite a = actualiteservice.getActualite(id);
+        model.addAttribute("actualite", a);
+        model.addAttribute("listSport", sportservice.getLesSports());
+        model.addAttribute("listEpreuve", epreuveservice.getLesEpreuves());
+        return "actualite/formUpdateActualite";
     }
 
 
