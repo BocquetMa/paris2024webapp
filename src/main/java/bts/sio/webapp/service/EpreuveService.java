@@ -2,6 +2,7 @@ package bts.sio.webapp.service;
 
 import bts.sio.webapp.model.Athlete;
 import bts.sio.webapp.model.Epreuve;
+import bts.sio.webapp.model.Sport;
 import bts.sio.webapp.repository.EpreuveProxy;
 import lombok.Data;
 import org.springframework.beans.factory.annotation.Autowired;
