@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>Détails de l'actualité</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+</head>
+<body>
+
+<div class="container" style="padding-top: 70px;">
+    <h2>Détails de l'Actualité</h2>
+    <div class="well">
+        <h4>Titre : <span th:text="${actualite.titre}">Titre</span></h4>
+        <h4>Contenu : <span th:text="${actualite.contenu}">Contenu</span></h4>
+        <h4>Date : <span th:text="${#temporals.format(actualite.dateActualite, 'dd-MM-yyyy')}">Date</span></h4>
+        <h4>Sport : <span th:text="${actualite.sport.nom}">Nom du sport</span></h4>
+        <h4>Epreuve : <span th:text="${actualite.epreuve.libelle}">Nom du sport</span></h4>
+    </div>
+</div>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+</body>
+</html>

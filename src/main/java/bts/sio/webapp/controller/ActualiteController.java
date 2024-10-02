@@ -1,6 +1,7 @@
 package bts.sio.webapp.controller;
 
 import bts.sio.webapp.model.Actualite;
+import bts.sio.webapp.model.Athlete;
 import bts.sio.webapp.service.ActualiteService;
 import lombok.Data;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,5 +23,11 @@ public class ActualiteController {
         return "actualite/formHomeActualite";
     }
 
+    @GetMapping("/actualite/{id}")
+    public String consulterActualite(@PathVariable("id") final int id, Model model) {
+        Actualite a = actualiteService.getActualite(id);
+        model.addAttribute("actualite", a);
+        return "actualite/formConsulterActualite";
+    }
 
 }
