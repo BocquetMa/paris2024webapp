@@ -30,7 +30,7 @@ public class ActualiteService {
         if(actualite.getId() == null) {
             savedActualite = actualiteProxy.createActualite(actualite);
         } else {
-            savedActualite = null;
+            savedActualite = actualiteProxy.updateActualite(actualite);
         }
 
         return savedActualite;
