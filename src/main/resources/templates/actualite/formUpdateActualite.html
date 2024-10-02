@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhml"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <link rel="stylesheet"
+          href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+          integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u"
+          crossorigin="anonymous">
+
+    <link rel="stylesheet"
+          href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css"
+          integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp"
+          crossorigin="anonymous">
+
+    <title>Paris 2024</title>
+
+    <style>
+        body {
+            padding-top: 50px;
+        }
+
+        .special {
+            padding-top: 50px;
+        }
+    </style>
+</head>
+<body>
+
+<nav class="navbar navbar-inverse navbar-fixed-top">
+    <div class="container">
+        <div class="navbar-header">
+            <a class="navbar-brand" href="..">Système de gestion des
+                actualites</a>
+        </div>
+    </div>
+</nav>
+
+
+<div class="container special">
+
+    <h2 class="h2">Modification d'un actualite</h2>
+    <div>
+        <form method="post"
+              th:action="@{/saveActualite}" th:object="${actualite}">
+            <div class="form-group">
+                <input
+                        type="hidden" th:field="*{id}" class="form-control">
+            </div>
+            <div class="form-group">
+                <label for="titreInput">Titre</label>
+                <input
+                        type="text" th:field="*{titre}" class="form-control" id="titreInputInput"
+                        aria-describedby="titreInputHelp" placeholder="Saisir le titre"> <small
+                    id="titreInputHelp" class="form-text text-muted">Merci d'écrire le titre</small>
+            </div>
+
+            <div class="form-group">
+                <label for="contenuInput">Contenu</label>
+                <input
+                        type="text" th:field="*{contenu}" class="form-control" id="contenuInput"
+                        aria-describedby="contenuInputHelp" placeholder="Saisir le contenu"> <small
+                    id="contenuInputHelp" class="form-text text-muted">Merci d'écrire le contenu.</small>
+            </div>
+
+            <div class="form-group">
+                <label for="dateActualiteInput">Date</label>
+                <input
+                        type="date" th:field="*{dateActualite}" class="form-control" id="dateActualiteInputInput"
+                        aria-describedby="dateActualiteInputHelp" placeholder="Saisir la date"> <small
+                    id="dateActualiteInputHelp" class="form-text text-muted">Merci d'écrire la date de l'actualité.</small>
+            </div>
+
+            <div class="form-group">
+                <label for="sport">Sport :</label>
+
+                <select id="sport" class="form-control" th:field="*{sport.id}">
+                    <option value=""></option>
+                    <option th:each="sport : ${listSport}" th:value="${sport.id}" th:text="${sport.nom}"></option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="epreuve">Epreuve :</label>
+
+                <select id="epreuve" class="form-control" th:field="*{epreuve.id}">
+                    <option value=""></option>
+                    <option th:each="epreuve : ${listEpreuve}" th:value="${epreuve.id}" th:text="${epreuve.libelle}"></option>
+                </select>
+            </div>
+
+            <button type="submit" class="btn btn-primary">Modifier</button>
+        </form>
+    </div>
+
+</div>
+
+<script
+        src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+<script
+        src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"
+        integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
+        crossorigin="anonymous"></script>
+</body>
+</html>
