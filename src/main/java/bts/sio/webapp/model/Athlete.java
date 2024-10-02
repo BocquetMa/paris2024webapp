@@ -3,7 +3,6 @@ package bts.sio.webapp.model;
 
 import lombok.Data;
 import java.util.List;
-
 import java.time.LocalDate;
 
 @Data
@@ -18,5 +17,4 @@ public class Athlete {
 
     private List<Olympiade> olympiades;
     private List<Epreuve> epreuves;
-
 }
