@@ -109,22 +109,6 @@ public class AthleteProxy {
         return response.getBody();
     }
 
-    public Epreuve getEpreuve(int epreuveId) {
-        String baseApiUrl = props.getApiUrl();
-        String getEpreuveUrl = baseApiUrl + "/epreuve/" + epreuveId;
-
-        RestTemplate restTemplate = new RestTemplate();
-        ResponseEntity<Epreuve> response = restTemplate.exchange(
-                getEpreuveUrl,
-                HttpMethod.GET,
-                null,
-                Epreuve.class
-        );
-
-        log.debug("Get Epreuve call " + response.getStatusCode().toString());
-
-        return response.getBody();
-    }
 
     /*
      * Delete an athlete using exchange method of RestTemplate

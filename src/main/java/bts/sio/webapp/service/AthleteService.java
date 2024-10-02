@@ -1,14 +1,12 @@
 package bts.sio.webapp.service;
 
 import bts.sio.webapp.model.Athlete;
-import bts.sio.webapp.model.Sport;
 import bts.sio.webapp.model.Epreuve;
 import bts.sio.webapp.repository.AthleteProxy;
 import lombok.Data;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
 
 @Data
 @Service
@@ -27,10 +25,6 @@ public class AthleteService {
 
     public Iterable<Athlete> getLesAthletes() {
         return athleteProxy.getAthletes();
-    }
-
-    public Epreuve getEpreuve(int epreuveId) {
-        return athleteProxy.getEpreuve(epreuveId);
     }
 
     public void deleteAthlete(final int id) {
