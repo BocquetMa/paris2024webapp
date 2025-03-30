@@ -1,0 +1,724 @@
+/* paris2024.css - Style officiel inspiré des Jeux Olympiques Paris 2024 */
+
+/* Variables de couleurs officielles des JO Paris 2024 */
+:root {
+    --paris-gold: #C8A45C;
+    --paris-blue: #2C84CB;
+    --paris-red: #EE334E;
+    --paris-purple: #7C377F;
+    --paris-green: #00BD87;
+    --paris-orange: #FF8300;
+    --paris-background: #F7F5F0;
+    --paris-dark: #272727;
+    --paris-light: #FFFFFF;
+    --paris-grey: #ADADAD;
+}
+
+/* Typographie */
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&display=swap');
+
+body {
+    font-family: 'Montserrat', 'Helvetica Neue', Arial, sans-serif;
+    background-color: var(--paris-background);
+    color: var(--paris-dark);
+    line-height: 1.6;
+    padding-top: 60px;
+    font-weight: 400;
+}
+
+/* Navbar inspirée du site officiel Paris 2024 */
+.navbar-inverse {
+    background-color: var(--paris-dark);
+    border: none;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.navbar-inverse .navbar-brand {
+    color: var(--paris-light);
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.navbar-inverse .navbar-nav > li > a {
+    color: var(--paris-light);
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    padding: 15px 20px;
+    transition: all 0.3s ease;
+}
+
+.navbar-inverse .navbar-brand:hover,
+.navbar-inverse .navbar-nav > li > a:hover {
+    color: var(--paris-gold);
+}
+
+.navbar-inverse .navbar-nav > .active > a,
+.navbar-inverse .navbar-nav > .active > a:hover {
+    background-color: var(--paris-blue);
+    color: white;
+}
+
+/* Container avec motif olympique */
+.container.special {
+    padding-top: 40px;
+    padding-bottom: 60px;
+    position: relative;
+}
+
+.container.special::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 5px;
+    background: linear-gradient(to right,
+    var(--paris-blue) 0%,
+    var(--paris-blue) 20%,
+    var(--paris-gold) 20%,
+    var(--paris-gold) 40%,
+    var(--paris-green) 40%,
+    var(--paris-green) 60%,
+    var(--paris-red) 60%,
+    var(--paris-red) 80%,
+    var(--paris-purple) 80%,
+    var(--paris-purple) 100%);
+}
+
+/* Card inspirée du style Paris 2024 */
+.card {
+    background-color: var(--paris-light);
+    border-radius: 12px;
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.05);
+    margin-bottom: 30px;
+    padding: 30px;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    border: none;
+    overflow: hidden;
+    position: relative;
+}
+
+.card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.1);
+}
+
+/* Effet d'ornement en coin de carte */
+.card::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 40px;
+    height: 40px;
+    background: linear-gradient(135deg, transparent 50%, var(--paris-gold) 50%);
+}
+
+/* Table stylisée */
+.table-responsive {
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+}
+
+.table {
+    background-color: var(--paris-light);
+    margin-bottom: 0;
+}
+
+.table thead th {
+    background-color: var(--paris-dark);
+    color: var(--paris-light);
+    border-bottom: 2px solid var(--paris-gold);
+    padding: 15px;
+    font-weight: 600;
+    text-transform: uppercase;
+    font-size: 0.9rem;
+    letter-spacing: 1px;
+}
+
+.table tbody tr:hover {
+    background-color: rgba(200, 164, 92, 0.05);
+}
+
+.table td {
+    padding: 15px;
+    vertical-align: middle;
+    border-top: 1px solid rgba(0,0,0,0.05);
+}
+
+/* Boutons stylisés aux couleurs des JO */
+.btn {
+    border-radius: 30px;
+    padding: 10px 20px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    transition: all 0.3s ease;
+    border: none;
+}
+
+.btn-primary {
+    background-color: var(--paris-blue);
+    color: white;
+}
+
+.btn-primary:hover {
+    background-color: #236ca3;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(44, 132, 203, 0.3);
+}
+
+.btn-info {
+    background-color: var(--paris-green);
+    color: white;
+}
+
+.btn-info:hover {
+    background-color: #00a575;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0, 189, 135, 0.3);
+}
+
+.btn-danger {
+    background-color: var(--paris-red);
+    color: white;
+}
+
+.btn-danger:hover {
+    background-color: #d42a42;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(238, 51, 78, 0.3);
+}
+
+.btn-default {
+    background-color: var(--paris-grey);
+    color: white;
+}
+
+.btn-default:hover {
+    background-color: #909090;
+    color: white;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(173, 173, 173, 0.3);
+}
+
+.btn-sm {
+    padding: 5px 15px;
+    font-size: 0.8rem;
+}
+
+/* Titres stylisés */
+.h2, h2 {
+    color: var(--paris-dark);
+    margin-bottom: 30px;
+    font-weight: 700;
+    position: relative;
+    display: inline-block;
+    padding-bottom: 15px;
+}
+
+.h2::after, h2::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    height: 3px;
+    background: linear-gradient(to right,
+    var(--paris-blue) 0%,
+    var(--paris-blue) 20%,
+    var(--paris-gold) 20%,
+    var(--paris-gold) 40%,
+    var(--paris-green) 40%,
+    var(--paris-green) 60%,
+    var(--paris-red) 60%,
+    var(--paris-red) 80%,
+    var(--paris-purple) 80%,
+    var(--paris-purple) 100%);
+}
+
+h3 {
+    color: var(--paris-dark);
+    font-weight: 600;
+    margin-bottom: 20px;
+    border-left: 4px solid var(--paris-gold);
+    padding-left: 15px;
+}
+
+/* Liens stylisés */
+a {
+    color: var(--paris-blue);
+    transition: color 0.3s ease;
+}
+
+a:hover {
+    color: var(--paris-gold);
+    text-decoration: none;
+}
+
+/* Sélection de texte */
+::selection {
+    background-color: var(--paris-gold);
+    color: white;
+}
+
+/* Cards pour dashboard */
+.dashboard-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 25px;
+    margin: 30px 0;
+}
+
+.stat-card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 30px 20px;
+    text-align: center;
+    border-radius: 12px;
+    background: white;
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+    border: none;
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.05);
+}
+
+.stat-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.1);
+}
+
+.stat-card .number {
+    font-size: 3rem;
+    font-weight: 700;
+    margin: 15px 0;
+    line-height: 1;
+}
+
+.stat-card .label {
+    font-size: 1rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    display: block;
+    color: var(--paris-dark);
+    background: none;
+    padding: 0;
+}
+
+.stat-card i {
+    opacity: 0.8;
+}
+
+/* Couleurs spécifiques par card */
+.stat-card.athletes {
+    color: var(--paris-blue);
+    border-top: 5px solid var(--paris-blue);
+}
+
+.stat-card.sports {
+    color: var(--paris-green);
+    border-top: 5px solid var(--paris-green);
+}
+
+.stat-card.events {
+    color: var(--paris-red);
+    border-top: 5px solid var(--paris-red);
+}
+
+.stat-card.countries {
+    color: var(--paris-purple);
+    border-top: 5px solid var(--paris-purple);
+}
+
+/* Badge olympique */
+.olympic-badge {
+    display: inline-block;
+    margin-left: 10px;
+    position: relative;
+    width: 60px;
+    height: 20px;
+}
+
+.olympic-badge::before {
+    content: "";
+    position: absolute;
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background: var(--paris-blue);
+    top: 4px;
+    left: 0;
+}
+
+.olympic-badge::after {
+    content: "";
+    position: absolute;
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background: var(--paris-gold);
+    top: 4px;
+    left: 16px;
+}
+
+.olympic-badge-green {
+    content: "";
+    position: absolute;
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background: var(--paris-green);
+    top: 4px;
+    left: 32px;
+}
+
+.olympic-badge-red {
+    content: "";
+    position: absolute;
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background: var(--paris-red);
+    top: 4px;
+    left: 48px;
+}
+
+/* Décoration de page */
+.page-decoration {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 8px;
+    background: linear-gradient(to right,
+    var(--paris-blue) 0%,
+    var(--paris-blue) 20%,
+    var(--paris-gold) 20%,
+    var(--paris-gold) 40%,
+    var(--paris-green) 40%,
+    var(--paris-green) 60%,
+    var(--paris-red) 60%,
+    var(--paris-red) 80%,
+    var(--paris-purple) 80%,
+    var(--paris-purple) 100%);
+    z-index: 999;
+}
+
+/* Notifications */
+.notification {
+    position: fixed;
+    top: 80px;
+    right: 30px;
+    z-index: 1000;
+    padding: 15px 25px 15px 20px;
+    background-color: var(--paris-green);
+    color: white;
+    border-radius: 8px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+    display: none;
+    animation: slideIn 0.5s ease forwards;
+    border-left: 5px solid #008c64;
+    font-weight: 500;
+}
+
+.notification.error {
+    background-color: var(--paris-red);
+    border-left: 5px solid #bf1c34;
+}
+
+@keyframes slideIn {
+    0% { transform: translateX(100%); opacity: 0; }
+    100% { transform: translateX(0); opacity: 1; }
+}
+
+/* Footer */
+.footer {
+    background-color: var(--paris-dark);
+    color: var(--paris-light);
+    padding: 40px 0;
+    position: relative;
+    overflow: hidden;
+    margin-top: 50px;
+}
+
+.footer::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 5px;
+    background: linear-gradient(to right,
+    var(--paris-blue) 0%,
+    var(--paris-blue) 20%,
+    var(--paris-gold) 20%,
+    var(--paris-gold) 40%,
+    var(--paris-green) 40%,
+    var(--paris-green) 60%,
+    var(--paris-red) 60%,
+    var(--paris-red) 80%,
+    var(--paris-purple) 80%,
+    var(--paris-purple) 100%);
+}
+
+.footer-logo {
+    font-size: 1.5rem;
+    font-weight: 700;
+    margin-bottom: 20px;
+    display: inline-block;
+    letter-spacing: 1px;
+    color: var(--paris-light);
+}
+
+.footer-links {
+    list-style: none;
+    padding: 0;
+    margin: 0 0 20px 0;
+}
+
+.footer-links li {
+    margin-bottom: 10px;
+}
+
+.footer-links a {
+    color: #aaa;
+    transition: color 0.3s ease;
+}
+
+.footer-links a:hover {
+    color: var(--paris-gold);
+}
+
+.paris-2024-logo {
+    position: relative;
+    font-weight: 700;
+    font-size: 1.2rem;
+    letter-spacing: 1px;
+    display: inline-block;
+    padding-right: 50px;
+}
+
+.paris-2024-logo::after {
+    content: "2024";
+    position: absolute;
+    right: 0;
+    top: 0;
+    font-weight: 300;
+}
+
+/* Ajustements responsifs */
+@media (max-width: 768px) {
+    .container.special {
+        padding-top: 20px;
+    }
+
+    .dashboard-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .card {
+        padding: 20px;
+    }
+
+    .table thead th {
+        padding: 10px;
+    }
+
+    .table td {
+        padding: 10px;
+    }
+
+    .h2::after, h2::after {
+        width: 100%;
+    }
+}
+
+/* Style pour les formulaires */
+.form-control {
+    height: auto;
+    padding: 12px 15px;
+    border: 1px solid #eee;
+    border-radius: 8px;
+    transition: all 0.3s ease;
+    box-shadow: none;
+}
+
+.form-control:focus {
+    border-color: var(--paris-blue);
+    box-shadow: 0 0 0 3px rgba(44, 132, 203, 0.1);
+}
+
+.form-group {
+    margin-bottom: 25px;
+}
+
+.form-group label {
+    font-weight: 600;
+    margin-bottom: 8px;
+    color: var(--paris-dark);
+}
+
+.form-text {
+    color: #888;
+    font-size: 0.9rem;
+    margin-top: 5px;
+}
+
+/* Style pour la grille de sports */
+.sport-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 25px;
+    margin-bottom: 30px;
+}
+
+.sport-card {
+    background: white;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.05);
+    transition: all 0.3s ease;
+    position: relative;
+    border-top: 5px solid var(--paris-gold);
+}
+
+.sport-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.1);
+}
+
+.sport-card-header {
+    padding: 20px;
+    border-bottom: 1px solid #f5f5f5;
+}
+
+.sport-card-body {
+    padding: 20px;
+}
+
+.sport-card-header h3 {
+    margin: 0;
+    color: var(--paris-dark);
+    font-weight: 600;
+    border: none;
+    padding: 0;
+}
+
+.sport-icon {
+    background: rgba(200, 164, 92, 0.1);
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 15px;
+    color: var(--paris-gold);
+}
+
+/* Style pour le profil athlète */
+.athlete-profile-header {
+    position: relative;
+    background: linear-gradient(to right, var(--paris-blue), var(--paris-purple));
+    color: white;
+    padding: 30px;
+    border-radius: 12px;
+    margin-bottom: 30px;
+}
+
+.athlete-avatar {
+    width: 120px;
+    height: 120px;
+    background: white;
+    border-radius: 50%;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+    margin-bottom: 20px;
+    font-size: 60px;
+    color: var(--paris-blue);
+}
+
+.athlete-name {
+    font-size: 2rem;
+    font-weight: 700;
+    margin-bottom: 5px;
+}
+
+.athlete-sport {
+    font-size: 1.2rem;
+    opacity: 0.9;
+    margin-bottom: 20px;
+}
+
+.athlete-country {
+    display: inline-block;
+    background: rgba(255, 255, 255, 0.2);
+    padding: 5px 15px;
+    border-radius: 30px;
+    font-weight: 500;
+}
+
+.athlete-medal {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    margin-right: 10px;
+    color: white;
+}
+
+.athlete-medal.gold {
+    background: var(--paris-gold);
+}
+
+.athlete-medal.silver {
+    background: #C0C0C0;
+}
+
+.athlete-medal.bronze {
+    background: #CD7F32;
+}
+
+.athlete-stat {
+    background: white;
+    padding: 15px;
+    border-radius: 8px;
+    margin-bottom: 15px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+}
+
+.athlete-stat-label {
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: #888;
+    margin-bottom: 5px;
+}
+
+.athlete-stat-value {
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: var(--paris-dark);
+}
+
+/* Animations */
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+.animate-fade-in {
+    animation: fadeIn 0.5s ease-in-out;
+}

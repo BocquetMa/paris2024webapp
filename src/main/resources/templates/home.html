@@ -1,108 +1,220 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhml"
+<html xmlns="http://www.w3.org/1999/xhtml"
 	  xmlns:th="http://www.thymeleaf.org">
 <head>
-<meta charset="UTF-8">
-<meta http-equiv="X-UA-Compatible" content="IE=edge">
-<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>Paris 2024 - Gestion des athlètes</title>
 
-<link rel="stylesheet"
-	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
-	integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u"
-	crossorigin="anonymous">
-
-<link rel="stylesheet"
-	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css"
-	integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp"
-	crossorigin="anonymous">
-
-<title>Paris 2024</title>
-
-<style>
-	body {
-		padding-top: 50px;
-	}
-	.special {
-		padding-top:50px;
-	}
-	.notification {
-		position: fixed;
-		top: 10px;
-		right: 10px;
-		z-index: 1000;
-		padding: 15px;
-		background-color: #d9534f;
-		color: white;
-		border-radius: 5px;
-		display: none;
-</style>
+	<!-- Bootstrap CSS -->
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+	<!-- Google Fonts -->
+	<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+	<!-- Font Awesome -->
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+	<!-- Custom CSS -->
+	<link rel="stylesheet" th:href="@{/css/main.css}">
 </head>
 <body>
-	<nav class="navbar navbar-inverse navbar-fixed-top">
-		<div class="container">
-			<div class="navbar-header">
-				<a class="navbar-brand" href=".">Système de gestion des athlètes</a>
-				<a class="navbar-brand" href="/">Accueil</a>
-				<a class="navbar-brand" href="/athletes">Athletes</a>
-				<a class="navbar-brand" href="/sports">Sports</a>
+<div class="notification" id="notification"></div>
+<div class="page-decoration"></div>
 
-			</div>
+<!-- Navigation -->
+<nav class="navbar navbar-inverse navbar-fixed-top">
+	<div class="container">
+		<div class="navbar-header">
+			<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar">
+				<span class="sr-only">Toggle navigation</span>
+				<span class="icon-bar"></span>
+				<span class="icon-bar"></span>
+				<span class="icon-bar"></span>
+			</button>
+			<a class="navbar-brand paris-2024-logo" href="/">
+				<i class="fas fa-medal"></i> PARIS 2024
+			</a>
 		</div>
-	</nav>
+		<div id="navbar" class="collapse navbar-collapse">
+			<ul class="nav navbar-nav">
+				<li class="active"><a href="/"><i class="fas fa-home"></i> Accueil</a></li>
+				<li><a href="/"><i class="fas fa-running"></i> Athlètes</a></li>
+				<li><a href="/sports"><i class="fas fa-volleyball-ball"></i> Sports</a></li>
+				<li><a href="/epreuves"><i class="fas fa-trophy"></i> Épreuves</a></li>
+				<li><a href="/actualites"><i class="fas fa-newspaper"></i> Actualités</a></li>
+			</ul>
+		</div>
+	</div>
+</nav>
 
+<!-- Dashboard Hero -->
+<div class="container special">
+	<div class="card" style="padding: 0; overflow: hidden;">
+		<div style="background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), url('https://picsum.photos/1200/400') no-repeat center center; background-size: cover; height: 200px; display: flex; align-items: center; justify-content: center; flex-direction: column; color: white; text-align: center; padding: 20px;">
+			<h1 style="font-weight: 700; margin-bottom: 15px; text-transform: uppercase; letter-spacing: 2px;">
+				Jeux Olympiques Paris 2024
+			</h1>
+			<p style="font-size: 1.2rem; max-width: 600px;">
+				Système de gestion des athlètes, sports et épreuves
+			</p>
+		</div>
+	</div>
 
-	<div class="container special">
-		<h2 class="h2">Liste des athlètes</h2>
+	<!-- Dashboard Stats -->
+	<h2 class="h2"><i class="fas fa-tachometer-alt"></i> Tableau de bord</h2>
+
+	<div class="dashboard-grid">
+		<div class="stat-card athletes">
+			<i class="fas fa-running fa-3x"></i>
+			<div class="number" th:text="${countAthletes}">0</div>
+			<div class="label">Athlètes</div>
+		</div>
+
+		<div class="stat-card sports">
+			<i class="fas fa-volleyball-ball fa-3x"></i>
+			<div class="number" th:text="${countSports}">0</div>
+			<div class="label">Sports</div>
+		</div>
+
+		<div class="stat-card events">
+			<i class="fas fa-trophy fa-3x"></i>
+			<div class="number" th:text="${countEpreuves}">0</div>
+			<div class="label">Épreuves</div>
+		</div>
+
+		<div class="stat-card countries">
+			<i class="fas fa-globe-americas fa-3x"></i>
+			<div class="number" th:text="${countPays}">0</div>
+			<div class="label">Pays</div>
+		</div>
+	</div>
+
+	<!-- Athletes List -->
+	<div class="card">
+		<div class="olympic-badge">
+			<div class="olympic-badge-green"></div>
+			<div class="olympic-badge-red"></div>
+		</div>
+		<h3><i class="fas fa-running"></i> Liste des athlètes</h3>
 		<div class="table-responsive">
-			<table class="table table-striped table-sm">
+			<table class="table table-striped table-hover">
 				<thead>
-					<tr>
-						<th>Prénom</th>
-						<th>Nom</th>
-						<th>Date de naissance</th>
-						<th>Pays</th>
-						<th>Sport</th>
-						<th>Olympiades</th>
-						<th>Epreuves</th>
-						<th>Action</th>
-					</tr>
+				<tr>
+					<th><i class="fas fa-user"></i> Prénom</th>
+					<th><i class="fas fa-user"></i> Nom</th>
+					<th><i class="fas fa-calendar-alt"></i> Date de naissance</th>
+					<th><i class="fas fa-flag"></i> Pays</th>
+					<th><i class="fas fa-volleyball-ball"></i> Sport</th>
+					<th><i class="fas fa-cogs"></i> Actions</th>
+				</tr>
 				</thead>
 				<tbody>
-					<tr th:if="${athletes.empty}">
-						<td colspan="3">Aucun+- athlète en base de données</td>
-					</tr>
-					<tr th:each="athlete: ${athletes}">
-						<td><span th:text="${athlete.prenom}"> Prenom </span></td>
-						<td><a th:href="@{/consulterAthlete/{id}(id=${athlete.id})}"><span th:text="${athlete.nom}"> Nom </span></a></td>
-						<td><span th:text="${#temporals.format(athlete.datenaiss, 'dd-MM-yyyy HH:mm')}"> Date de naissance </span></td>
-						<td>
-							<span th:if="${athlete.pays != null}" th:text="${athlete.pays.nom}"></span>
-							<span th:if="${athlete.pays == null}">Aucun pays</span>
-						</td>
-
-						<td><span th:text="${athlete.sport.nom}"> Nom </span></td>
-						<td>
-							<ul class="olympiades-list" th:each="olympiade : ${athlete.olympiades}">
-								<li th:text="${olympiade.numero}"></li>
-							</ul>
-						</td>
-						<td>
-							<a th:href="@{/updateAthlete/{id}(id=${athlete.id})}"><button class="btn btn-info">Modifier</button></a>
-							<a th:href="@{/deleteAthlete/{id}(id=${athlete.id})}"><button class="btn btn-danger">Supprimer</button></a>
-						</td>
-					</tr>
+				<tr th:if="${athletes.empty}">
+					<td colspan="6" class="text-center">Aucun athlète enregistré</td>
+				</tr>
+				<tr th:each="athlete: ${athletes}">
+					<td><span th:text="${athlete.prenom}">Prénom</span></td>
+					<td><a th:href="@{/consulterAthlete/{id}(id=${athlete.id})}"><span th:text="${athlete.nom}">Nom</span></a></td>
+					<td><span th:text="${#temporals.format(athlete.datenaiss, 'dd-MM-yyyy')}">Date</span></td>
+					<td>
+						<span th:if="${athlete.pays != null}" th:text="${athlete.pays.nom}">Pays</span>
+						<span th:if="${athlete.pays == null}">-</span>
+					</td>
+					<td><span th:text="${athlete.sport.nom}">Sport</span></td>
+					<td class="action-buttons">
+						<a th:href="@{/consulterAthlete/{id}(id=${athlete.id})}" class="btn btn-sm btn-primary">
+							<i class="fas fa-eye"></i>
+						</a>
+						<a th:href="@{/updateAthlete/{id}(id=${athlete.id})}" class="btn btn-sm btn-info">
+							<i class="fas fa-edit"></i>
+						</a>
+						<a th:href="@{/deleteAthlete/{id}(id=${athlete.id})}" class="btn btn-sm btn-danger"
+						   onclick="return confirm('Êtes-vous sûr de vouloir supprimer cet athlète?')">
+							<i class="fas fa-trash"></i>
+						</a>
+					</td>
+				</tr>
 				</tbody>
 			</table>
 		</div>
-		<h4><a th:href="@{/createAthlete}">Ajouter un nouvel athlete</a></h4>
-
+		<a th:href="@{/createAthlete}" class="btn btn-primary">
+			<i class="fas fa-plus"></i> Ajouter un nouvel athlète
+		</a>
 	</div>
+</div>
 
-	<script
-		src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
-	<script
-		src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"
-		integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
-		crossorigin="anonymous"></script>
+<!-- Footer -->
+<footer class="footer">
+	<div class="container">
+		<div class="row">
+			<div class="col-md-6">
+				<div class="footer-logo">
+					<i class="fas fa-medal"></i> PARIS 2024
+				</div>
+				<p>
+					Plateforme de gestion officielle des athlètes, sports et épreuves des Jeux Olympiques Paris 2024.
+				</p>
+			</div>
+			<div class="col-md-3">
+				<h4>Liens rapides</h4>
+				<ul class="footer-links">
+					<li><a href="/"><i class="fas fa-home"></i> Accueil</a></li>
+					<li><a href="/athletes"><i class="fas fa-running"></i> Athlètes</a></li>
+					<li><a href="/sports"><i class="fas fa-volleyball-ball"></i> Sports</a></li>
+					<li><a href="/epreuves"><i class="fas fa-trophy"></i> Épreuves</a></li>
+				</ul>
+			</div>
+			<div class="col-md-3">
+				<h4>Ressources</h4>
+				<ul class="footer-links">
+					<li><a href="#"><i class="fas fa-book"></i> Documentation</a></li>
+					<li><a href="#"><i class="fas fa-question-circle"></i> Aide</a></li>
+					<li><a href="#"><i class="fas fa-info-circle"></i> À propos</a></li>
+				</ul>
+			</div>
+		</div>
+		<hr style="border-color: #555; margin: 20px 0;">
+		<div class="text-center">
+			<p>&copy; 2025 Paris 2024 - Tous droits réservés</p>
+			<div style="margin-top: 10px;">
+				<span style="display: inline-block; width: 10px; height: 10px; border-radius: 50%; background-color: var(--paris-blue); margin: 0 5px;"></span>
+				<span style="display: inline-block; width: 10px; height: 10px; border-radius: 50%; background-color: var(--paris-gold); margin: 0 5px;"></span>
+				<span style="display: inline-block; width: 10px; height: 10px; border-radius: 50%; background-color: var(--paris-green); margin: 0 5px;"></span>
+				<span style="display: inline-block; width: 10px; height: 10px; border-radius: 50%; background-color: var(--paris-red); margin: 0 5px;"></span>
+				<span style="display: inline-block; width: 10px; height: 10px; border-radius: 50%; background-color: var(--paris-purple); margin: 0 5px;"></span>
+			</div>
+		</div>
+	</div>
+</footer>
+
+<!-- Scripts -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+<!-- Custom JS pour notifications -->
+<script>
+	function showNotification(message, isError) {
+		const notification = document.getElementById('notification');
+		notification.textContent = message;
+		notification.style.display = 'block';
+
+		if (isError) {
+			notification.classList.add('error');
+		} else {
+			notification.classList.remove('error');
+		}
+
+		setTimeout(() => {
+			notification.style.opacity = '0';
+			setTimeout(() => {
+				notification.style.display = 'none';
+				notification.style.opacity = '1';
+			}, 500);
+		}, 3000);
+	}
+
+	// Montrer une notification de bienvenue lors du chargement de la page
+	// Décommentez la ligne ci-dessous pour activer
+	// window.addEventListener('load', () => showNotification('Bienvenue sur la plateforme Paris 2024!', false));
+</script>
 </body>
 </html>

@@ -1,90 +1,241 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhml"
+<html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Paris 2024 - Gestion des épreuves</title>
 
-    <link rel="stylesheet"
-          href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
-          integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u"
-          crossorigin="anonymous">
-
-    <link rel="stylesheet"
-          href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css"
-          integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp"
-          crossorigin="anonymous">
-
-    <title>Paris 2024</title>
-
-    <style>
-        body {
-            padding-top: 50px;
-        }
-        .special {
-            padding-top:50px;
-        }
-        .notification {
-            position: fixed;
-            top: 10px;
-            right: 10px;
-            z-index: 1000;
-            padding: 15px;
-            background-color: #d9534f;
-            color: white;
-            border-radius: 5px;
-            display: none;
-    </style>
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <!-- Custom CSS -->
+    <link rel="stylesheet" th:href="@{/css/main.css}">
 </head>
 <body>
 <div class="notification" id="notification"></div>
+<div class="page-decoration"></div>
 
+<!-- Navigation -->
 <nav class="navbar navbar-inverse navbar-fixed-top">
     <div class="container">
         <div class="navbar-header">
-            <a class="navbar-brand" href=".">Système de gestion des épreuves</a>
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand paris-2024-logo" href="/">
+                <i class="fas fa-medal"></i> PARIS 2024
+            </a>
+        </div>
+        <div id="navbar" class="collapse navbar-collapse">
+            <ul class="nav navbar-nav">
+                <li><a href="/"><i class="fas fa-home"></i> Accueil</a></li>
+                <li><a href="/"><i class="fas fa-running"></i> Athlètes</a></li>
+                <li><a href="/sports"><i class="fas fa-volleyball-ball"></i> Sports</a></li>
+                <li class="active"><a href="/epreuves"><i class="fas fa-trophy"></i> Épreuves</a></li>
+                <li><a href="/actualites"><i class="fas fa-newspaper"></i> Actualités</a></li>
+            </ul>
         </div>
     </div>
 </nav>
 
-
 <div class="container special">
-    <h2 class="h2">Liste des épreuves</h2>
-    <div class="table-responsive">
-        <table class="table table-striped table-sm">
-            <thead>
-            <tr>
-                <th>Libelle</th>
-                <th>Date début</th>
-                <th>Date fin</th>
-            </tr>
-            </thead>
-            <tbody>
-            <tr th:if="${epreuves.empty}">
-                <td colspan="3">Aucun+- epreuve en base de données</td>
-            </tr>
-            <tr th:each="epreuve : ${epreuves}">
-                <td><span th:text="${epreuve.libelle}">Libelle</span></td>
-                <td><span th:text="${epreuve.dateDebut}">Date de début</span></td>
-                <td><span th:text="${epreuve.dateFin}">Date de fin</span></td>
-                <td>
-                    <a th:href="@{/updateEpreuve/{id}(id=${epreuve.id})}"><button class="btn btn-info">Modifier</button></a>
-                    <a th:href="@{/deleteEpreuve/{id}(id=${epreuve.id})}"><button class="btn btn-danger">Supprimer</button></a>
-                </td>
-            </tr>
-            </tbody>
-        </table>
+    <!-- Epreuves Header -->
+    <div class="card" style="padding: 0; overflow: hidden;">
+        <div style="background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), url('https://picsum.photos/1200/300') no-repeat center center; background-size: cover; height: 150px; display: flex; align-items: center; justify-content: center; flex-direction: column; color: white; text-align: center; padding: 20px;">
+            <h1 style="font-weight: 700; margin-bottom: 15px; text-transform: uppercase; letter-spacing: 2px;">
+                <i class="fas fa-trophy"></i> Épreuves olympiques
+            </h1>
+        </div>
     </div>
-    <h4><a th:href="@{/createEpreuve}">Ajouter une nouvelle épreuve</a></h4>
 
+    <!-- Main Content -->
+    <div class="card">
+        <div class="olympic-badge">
+            <div class="olympic-badge-green"></div>
+            <div class="olympic-badge-red"></div>
+        </div>
+
+        <h2 class="h2"><i class="fas fa-trophy"></i> Gestion des épreuves</h2>
+
+        <!-- Add Button - Top -->
+        <div style="margin-bottom: 20px;">
+            <a th:href="@{/createEpreuve}" class="btn btn-primary">
+                <i class="fas fa-plus"></i> Ajouter une nouvelle épreuve
+            </a>
+        </div>
+
+        <!-- Calendar View Selector -->
+        <div class="btn-group" style="margin-bottom: 20px;">
+            <button type="button" class="btn btn-default active">
+                <i class="fas fa-list"></i> Vue liste
+            </button>
+            <button type="button" class="btn btn-default">
+                <i class="fas fa-calendar-alt"></i> Vue calendrier
+            </button>
+        </div>
+
+        <!-- Epreuves Table -->
+        <div class="table-responsive">
+            <table class="table table-striped table-hover">
+                <thead>
+                <tr>
+                    <th style="width: 50px;">#</th>
+                    <th><i class="fas fa-trophy"></i> Libellé</th>
+                    <th><i class="fas fa-calendar-check"></i> Date de début</th>
+                    <th><i class="fas fa-calendar-times"></i> Date de fin</th>
+                    <th style="width: 150px;"><i class="fas fa-cogs"></i> Actions</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:if="${epreuves.empty}">
+                    <td colspan="5" class="text-center">
+                        <div style="padding: 20px;">
+                            <i class="fas fa-info-circle" style="font-size: 2rem; color: var(--paris-blue); margin-bottom: 10px;"></i>
+                            <p>Aucune épreuve n'est actuellement enregistrée.</p>
+                        </div>
+                    </td>
+                </tr>
+                <tr th:each="epreuve, iterStat : ${epreuves}" class="animate-fade-in">
+                    <td th:text="${iterStat.count}">1</td>
+                    <td>
+                        <span th:text="${epreuve.libelle}" style="font-weight: 600;">Libellé</span>
+                    </td>
+                    <td>
+                        <span th:text="${epreuve.dateDebut}" class="badge" style="background-color: var(--paris-green); color: white; font-weight: 500;">Date début</span>
+                    </td>
+                    <td>
+                        <span th:text="${epreuve.dateFin}" class="badge" style="background-color: var(--paris-red); color: white; font-weight: 500;">Date fin</span>
+                    </td>
+                    <td class="action-buttons">
+                        <a th:href="@{/updateEpreuve/{id}(id=${epreuve.id})}" class="btn btn-sm btn-info">
+                            <i class="fas fa-edit"></i>
+                        </a>
+                        <a th:href="@{/deleteEpreuve/{id}(id=${epreuve.id})}" class="btn btn-sm btn-danger"
+                           onclick="return confirm('Êtes-vous sûr de vouloir supprimer cette épreuve?')">
+                            <i class="fas fa-trash"></i>
+                        </a>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <!-- Timeline View -->
+    <div class="card" style="margin-top: 30px;">
+        <h3><i class="fas fa-calendar-alt"></i> Calendrier des épreuves</h3>
+
+        <div class="timeline" style="position: relative; padding: 20px 0;">
+            <!-- Timeline axis -->
+            <div style="position: absolute; top: 40px; left: 0; right: 0; height: 4px; background-color: #eee; z-index: 1;"></div>
+
+            <!-- Timeline points - Example, you'll need to calculate positions based on actual dates -->
+            <div th:each="epreuve, iterStat : ${epreuves}"
+                 style="position: relative; margin-bottom: 30px; padding-left: 50px;"
+                 th:if="${iterStat.index < 5}"> <!-- Limiting to 5 for demonstration -->
+
+                <!-- Timeline marker -->
+                <div style="position: absolute; left: 0; top: 0; width: 40px; height: 40px; border-radius: 50%; background-color: var(--paris-blue); z-index: 2; display: flex; align-items: center; justify-content: center; color: white;">
+                    <i class="fas fa-trophy"></i>
+                </div>
+
+                <!-- Event content -->
+                <div style="background-color: #f9f9f9; padding: 15px; border-radius: 8px; box-shadow: 0 2px 5px rgba(0,0,0,0.05);">
+                    <h4 th:text="${epreuve.libelle}" style="margin-top: 0; color: var(--paris-blue);">Libellé de l'épreuve</h4>
+                    <div style="display: flex; gap: 15px; color: #666; font-size: 0.9rem;">
+                        <div><i class="fas fa-calendar-check"></i> <span th:text="${epreuve.dateDebut}">Date début</span></div>
+                        <div><i class="fas fa-calendar-times"></i> <span th:text="${epreuve.dateFin}">Date fin</span></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Show more button if needed -->
+            <div th:if="${#lists.size(epreuves) > 5}" style="text-align: center; margin-top: 20px;">
+                <button class="btn btn-default">
+                    <i class="fas fa-chevron-down"></i> Voir plus d'épreuves
+                </button>
+            </div>
+        </div>
+    </div>
 </div>
 
-<script
-        src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
-<script
-        src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"
-        integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
-        crossorigin="anonymous"></script>
+<!-- Footer -->
+<footer class="footer">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6">
+                <div class="footer-logo">
+                    <i class="fas fa-medal"></i> PARIS 2024
+                </div>
+                <p>
+                    Plateforme de gestion officielle des athlètes, sports et épreuves des Jeux Olympiques Paris 2024.
+                </p>
+            </div>
+            <div class="col-md-3">
+                <h4>Liens rapides</h4>
+                <ul class="footer-links">
+                    <li><a href="/"><i class="fas fa-home"></i> Accueil</a></li>
+                    <li><a href="/athletes"><i class="fas fa-running"></i> Athlètes</a></li>
+                    <li><a href="/sports"><i class="fas fa-volleyball-ball"></i> Sports</a></li>
+                    <li><a href="/epreuves"><i class="fas fa-trophy"></i> Épreuves</a></li>
+                </ul>
+            </div>
+            <div class="col-md-3">
+                <h4>Ressources</h4>
+                <ul class="footer-links">
+                    <li><a href="#"><i class="fas fa-book"></i> Documentation</a></li>
+                    <li><a href="#"><i class="fas fa-question-circle"></i> Aide</a></li>
+                    <li><a href="#"><i class="fas fa-info-circle"></i> À propos</a></li>
+                </ul>
+            </div>
+        </div>
+        <hr style="border-color: #555; margin: 20px 0;">
+        <div class="text-center">
+            <p>&copy; 2025 Paris 2024 - Tous droits réservés</p>
+            <div style="margin-top: 10px;">
+                <span style="display: inline-block; width: 10px; height: 10px; border-radius: 50%; background-color: var(--paris-blue); margin: 0 5px;"></span>
+                <span style="display: inline-block; width: 10px; height: 10px; border-radius: 50%; background-color: var(--paris-gold); margin: 0 5px;"></span>
+                <span style="display: inline-block; width: 10px; height: 10px; border-radius: 50%; background-color: var(--paris-green); margin: 0 5px;"></span>
+                <span style="display: inline-block; width: 10px; height: 10px; border-radius: 50%; background-color: var(--paris-red); margin: 0 5px;"></span>
+                <span style="display: inline-block; width: 10px; height: 10px; border-radius: 50%; background-color: var(--paris-purple); margin: 0 5px;"></span>
+            </div>
+        </div>
+    </div>
+</footer>
+
+<!-- Scripts -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+<!-- Custom JS pour notifications -->
+<script>
+    function showNotification(message, isError) {
+        const notification = document.getElementById('notification');
+        notification.textContent = message;
+        notification.style.display = 'block';
+
+        if (isError) {
+            notification.classList.add('error');
+        } else {
+            notification.classList.remove('error');
+        }
+
+        setTimeout(() => {
+            notification.style.opacity = '0';
+            setTimeout(() => {
+                notification.style.display = 'none';
+                notification.style.opacity = '1';
+            }, 500);
+        }, 3000);
+    }
+</script>
 </body>
 </html>

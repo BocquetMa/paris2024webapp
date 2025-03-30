@@ -1,47 +1,38 @@
-<!DOCTYPE html>
-<html lang="fr">
-<head>
-    <meta charset="UTF-8">
-    <title>Détails de l'Athlète</title>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-</head>
-<body>
-
-<nav class="navbar navbar-inverse navbar-fixed-top">
-    <div class="container">
-        <div class="navbar-header">
-            <a class="navbar-brand" href="/">Accueil</a>
-            <a class="navbar-brand" href="/athletes">Athletes</a>
-            <a class="navbar-brand" href="/sports">Sports</a>
-        </div>
-    </div>
-</nav>
-
-<div class="container" style="padding-top: 70px;">
-    <h2>Détails de l'Athlète</h2>
-    <div class="well">
-        <h4>Prénom: <span th:text="${athlete.prenom}">Prénom de l'athlète</span></h4>
-        <h4>Nom: <span th:text="${athlete.nom}">Nom de l'athlète</span></h4>
-        <h4>Date de naissance: <span th:text="${#temporals.format(athlete.datenaiss, 'dd-MM-yyyy')}">Date de naissance</span></h4>
-        <h4>Pays:
-            <span th:if="${athlete.pays != null}" th:text="${athlete.pays.nom}">Nom du pays</span>
-            <span th:if="${athlete.pays == null}">Aucun pays</span>
-        </h4>
-        <h4>Sport: <span th:text="${athlete.sport.nom}">Nom du sport</span></h4>
-        <h4>Olympiades:
-            <ul th:each="olympiade : ${athlete.olympiades}">
-                <li th:text="${olympiade.numero}"></li>
-            </ul>
-        </h4>
-        <h4>Epreuves :
-            <ul th:each="epreuve : ${athlete.epreuves}">
-                <li th:text="${epreuve.libelle}"></li>
-            </ul>
-        </h4>
-    </div>
+<span style="display: inline-block; width: 10px; height: 10px; border-radius: 50%; background-color: var(--paris-blue); margin: 0 5px;"></span>
+<span style="display: inline-block; width: 10px; height: 10px; border-radius: 50%; background-color: var(--paris-gold); margin: 0 5px;"></span>
+<span style="display: inline-block; width: 10px; height: 10px; border-radius: 50%; background-color: var(--paris-green); margin: 0 5px;"></span>
+<span style="display: inline-block; width: 10px; height: 10px; border-radius: 50%; background-color: var(--paris-red); margin: 0 5px;"></span>
+<span style="display: inline-block; width: 10px; height: 10px; border-radius: 50%; background-color: var(--paris-purple); margin: 0 5px;"></span>
 </div>
+</div>
+</div>
+</footer>
 
+<!-- Scripts -->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+<!-- Custom JS pour notifications -->
+<script>
+    function showNotification(message, isError) {
+        const notification = document.getElementById('notification');
+        notification.textContent = message;
+        notification.style.display = 'block';
+
+        if (isError) {
+            notification.classList.add('error');
+        } else {
+            notification.classList.remove('error');
+        }
+
+        setTimeout(() => {
+            notification.style.opacity = '0';
+            setTimeout(() => {
+                notification.style.display = 'none';
+                notification.style.opacity = '1';
+            }, 500);
+        }, 3000);
+    }
+</script>
 </body>
 </html>

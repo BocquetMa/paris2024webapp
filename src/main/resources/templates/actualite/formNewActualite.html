@@ -1,105 +1,326 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xthml"
+<html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Paris 2024 - Ajouter une actualité</title>
 
-    <link rel="stylesheet"
-          href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
-          integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u"
-          crossorigin="anonymous">
-
-    <link rel="stylesheet"
-          href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css"
-          integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp"
-          crossorigin="anonymous">
-
-    <title>Paris 2024</title>
-
-    <style>
-        body {
-            padding-top: 50px;
-        }
-
-        .special {
-            padding-top: 50px;
-        }
-    </style>
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <!-- Custom CSS -->
+    <link rel="stylesheet" th:href="@{/css/main.css}">
+    <!-- Datepicker CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/css/bootstrap-datepicker.min.css">
 </head>
 <body>
+<div class="notification" id="notification"></div>
+<div class="page-decoration"></div>
 
+<!-- Navigation -->
 <nav class="navbar navbar-inverse navbar-fixed-top">
     <div class="container">
         <div class="navbar-header">
-            <a class="navbar-brand" href="..">Système de gestion des
-                actualites</a>
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand paris-2024-logo" href="/">
+                <i class="fas fa-medal"></i> PARIS 2024
+            </a>
+        </div>
+        <div id="navbar" class="collapse navbar-collapse">
+            <ul class="nav navbar-nav">
+                <li><a href="/"><i class="fas fa-home"></i> Accueil</a></li>
+                <li><a href="/athletes"><i class="fas fa-running"></i> Athlètes</a></li>
+                <li><a href="/sports"><i class="fas fa-volleyball-ball"></i> Sports</a></li>
+                <li><a href="/epreuves"><i class="fas fa-trophy"></i> Épreuves</a></li>
+                <li class="active"><a href="/actualites"><i class="fas fa-newspaper"></i> Actualités</a></li>
+            </ul>
         </div>
     </div>
 </nav>
 
-
 <div class="container special">
+    <div class="card">
+        <div class="olympic-badge">
+            <div class="olympic-badge-green"></div>
+            <div class="olympic-badge-red"></div>
+        </div>
 
-    <h2 class="h2">Ajout d'un nouvel actualite</h2>
-    <div>
-        <form method="post"
-              th:action="@{/saveActualite}" th:object="${actualite}">
+        <h2 class="h2"><i class="fas fa-plus-circle"></i> Ajout d'une nouvelle actualité</h2>
 
-            <div class="form-group">
-                <label for="titreInput">Titre</label>
-                <input
-                        type="text" th:field="*{titre}" class="form-control" id="titreInput"
-                        aria-describedby="titreHelp" placeholder="Saisir le titre"> <small
-                    id="titreHelp" class="form-text text-muted">Merci d'écrire le titre de l'actualité.</small>
+        <div class="row">
+            <div class="col-md-8 col-md-offset-2">
+                <form method="post" th:action="@{/saveActualite}" th:object="${actualite}" class="animate-fade-in">
+                    <!-- Titre -->
+                    <div class="form-group">
+                        <label for="titreInput"><i class="fas fa-heading"></i> Titre</label>
+                        <input
+                                type="text"
+                                th:field="*{titre}"
+                                class="form-control"
+                                id="titreInput"
+                                aria-describedby="titreHelp"
+                                placeholder="Saisir un titre accrocheur">
+                        <small id="titreHelp" class="form-text text-muted">Un titre clair et concis pour votre actualité.</small>
+                    </div>
+
+                    <!-- Contenu -->
+                    <div class="form-group">
+                        <label for="contenuInput"><i class="fas fa-align-left"></i> Contenu</label>
+                        <textarea
+                                th:field="*{contenu}"
+                                class="form-control"
+                                id="contenuInput"
+                                aria-describedby="contenuHelp"
+                                placeholder="Rédigez le contenu de votre actualité..."
+                                rows="6"></textarea>
+                        <small id="contenuHelp" class="form-text text-muted">Détaillez ici le contenu de votre actualité.</small>
+                    </div>
+
+                    <div class="row">
+                        <!-- Date -->
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label for="dateActualiteInput"><i class="fas fa-calendar-alt"></i> Date de publication</label>
+                                <div class="input-group date">
+                                    <input
+                                            type="date"
+                                            th:field="*{dateActualite}"
+                                            class="form-control"
+                                            id="dateActualiteInput"
+                                            aria-describedby="dateActualiteHelp">
+                                    <div class="input-group-addon">
+                                        <span class="glyphicon glyphicon-calendar"></span>
+                                    </div>
+                                </div>
+                                <small id="dateActualiteHelp" class="form-text text-muted">Date de publication de l'actualité.</small>
+                            </div>
+                        </div>
+
+                        <!-- Sport -->
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label for="sport"><i class="fas fa-volleyball-ball"></i> Sport concerné</label>
+                                <select id="sport" class="form-control" th:field="*{sport.id}">
+                                    <option value="">Sélectionnez un sport</option>
+                                    <option th:each="sport : ${listSport}" th:value="${sport.id}" th:text="${sport.nom}"></option>
+                                </select>
+                                <small class="form-text text-muted">Choisissez le sport lié à cette actualité.</small>
+                            </div>
+                        </div>
+
+                        <!-- Épreuve -->
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label for="epreuve"><i class="fas fa-trophy"></i> Épreuve concernée</label>
+                                <select id="epreuve" class="form-control" th:field="*{epreuve.id}">
+                                    <option value="">Sélectionnez une épreuve</option>
+                                    <option th:each="epreuve : ${listEpreuve}" th:value="${epreuve.id}" th:text="${epreuve.libelle}"></option>
+                                    <option th:if="${listEpreuve.size() == 0}" value="">Aucune épreuve disponible</option>
+                                </select>
+                                <small class="form-text text-muted">Choisissez l'épreuve liée à cette actualité.</small>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Image Upload (Simulation) -->
+                    <div class="form-group" style="margin-top: 20px; border: 2px dashed #eee; padding: 20px; text-align: center; border-radius: 8px;">
+                        <label>
+                            <i class="fas fa-image" style="font-size: 2rem; color: var(--paris-blue); margin-bottom: 10px; display: block;"></i>
+                            <span style="display: block; margin-bottom: 10px;">Glissez et déposez une image ou</span>
+                            <span class="btn btn-default">Parcourir les fichiers</span>
+                            <input type="file" style="display: none;">
+                        </label>
+                        <small class="form-text text-muted" style="margin-top: 10px;">Image d'illustration pour votre actualité (formats JPG, PNG - max 2MB).</small>
+                    </div>
+
+                    <!-- Options de publication -->
+                    <div class="panel panel-default" style="margin-top: 20px; border: 1px solid #f0f0f0;">
+                        <div class="panel-heading" style="background-color: #f9f9f9; color: var(--paris-dark);">
+                            <h4 style="margin: 0;"><i class="fas fa-cogs"></i> Options de publication <small>(optionnel)</small></h4>
+                        </div>
+                        <div class="panel-body">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="checkbox">
+                                        <label>
+                                            <input type="checkbox"> Épingler sur la page d'accueil
+                                        </label>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="checkbox">
+                                        <label>
+                                            <input type="checkbox"> Partager sur les réseaux sociaux
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Boutons d'action -->
+                    <div class="form-group" style="margin-top: 30px; text-align: center;">
+                        <button type="submit" class="btn btn-primary">
+                            <i class="fas fa-save"></i> Publier l'actualité
+                        </button>
+                        <a href="/actualites" class="btn btn-default" style="margin-left: 10px;">
+                            <i class="fas fa-arrow-left"></i> Retour
+                        </a>
+                    </div>
+                </form>
             </div>
-
-            <div class="form-group">
-                <label for="contenuInput">Contenu</label>
-                <input
-                        type="text" th:field="*{contenu}" class="form-control" id="contenuInput"
-                        aria-describedby="contenuHelp" placeholder="Saisir le contenu"> <small
-                    id="contenuHelp" class="form-text text-muted">Merci d'écrire le contenu de l'actualité.</small>
-            </div>
-
-            <div class="form-group">
-                <label for="dateActualiteInput">Date</label>
-                <input
-                        type="date" th:field="*{dateActualite}" class="form-control" id="dateActualiteInput"
-                        aria-describedby="dateActualiteHelp" placeholder="Saisir la date"> <small
-                    id="dateActualiteHelp" class="form-text text-muted">Merci d'écrire la date de l'actualité.</small>
-            </div>
-
-            <div class="form-group">
-                <label for="sport">Sport :</label>
-                <select id="sport" class="form-control" th:field="*{sport.id}">
-                    <option value="">Sélectionnez un sport</option>
-                    <option th:each="sport : ${listSport}" th:value="${sport.id}" th:text="${sport.nom}"></option>
-                </select>
-            </div>
-
-            <div class="form-group">
-                <label for="epreuve">Epreuve :</label>
-                <select id="epreuve" class="form-control" th:field="*{epreuve.id}">
-                    <option value="">Sélectionnez une epreuve</option>
-                    <option th:each="epreuve : ${listEpreuve}" th:value="${epreuve.id}" th:text="${epreuve.libelle}"></option>
-                    <option th:if="${listEpreuve.size() == 0}" value="">Aucune épreuve disponible</option>
-                </select>
-            </div>
-
-
-            <button type="submit" class="btn btn-primary">Créer</button>
-        </form>
+        </div>
     </div>
 
+    <!-- Aperçu -->
+    <div class="card" style="margin-top: 20px; background-color: rgba(44, 132, 203, 0.05);">
+        <h3><i class="fas fa-eye"></i> Aperçu de l'actualité</h3>
+
+        <p style="margin-bottom: 20px;">Votre actualité apparaîtra sur le site comme dans l'exemple ci-dessous :</p>
+
+        <div class="row">
+            <div class="col-md-8 col-md-offset-2">
+                <div style="border: 1px solid #eee; border-radius: 8px; overflow: hidden;">
+                    <!-- Preview Header -->
+                    <div style="height: 200px; background-color: #f0f0f0; display: flex; align-items: center; justify-content: center; color: #aaa;">
+                        <i class="fas fa-image" style="font-size: 3rem;"></i>
+                    </div>
+
+                    <!-- Preview Content -->
+                    <div style="padding: 20px;">
+                        <div style="margin-bottom: 10px;">
+                            <span class="badge" style="background-color: var(--paris-gold); margin-right: 5px;">Sport</span>
+                            <span class="badge" style="background-color: var(--paris-blue);">Épreuve</span>
+                            <span style="float: right; color: #888; font-size: 0.9rem;">
+                                    <i class="far fa-calendar-alt"></i> Date
+                                </span>
+                        </div>
+
+                        <h3 style="margin-top: 10px; font-weight: 600;">Titre de l'actualité</h3>
+
+                        <p style="color: #666;">
+                            Aperçu du contenu de l'actualité... Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+                            Nullam auctor, nisl eget ultricies tincidunt, nisl nisl aliquam nisl, eget ultricies nisl nisl eget nisl.
+                        </p>
+
+                        <a href="#" class="btn btn-primary" style="margin-top: 10px;">
+                            <i class="fas fa-arrow-right"></i> Lire la suite
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
 
-<script
-        src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
-<script
-        src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"
-        integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
-        crossorigin="anonymous"></script>
+<!-- Footer -->
+<footer class="footer">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6">
+                <div class="footer-logo">
+                    <i class="fas fa-medal"></i> PARIS 2024
+                </div>
+                <p>
+                    Plateforme de gestion officielle des athlètes, sports et épreuves des Jeux Olympiques Paris 2024.
+                </p>
+            </div>
+            <div class="col-md-3">
+                <h4>Liens rapides</h4>
+                <ul class="footer-links">
+                    <li><a href="/"><i class="fas fa-home"></i> Accueil</a></li>
+                    <li><a href="/athletes"><i class="fas fa-running"></i> Athlètes</a></li>
+                    <li><a href="/sports"><i class="fas fa-volleyball-ball"></i> Sports</a></li>
+                    <li><a href="/epreuves"><i class="fas fa-trophy"></i> Épreuves</a></li>
+                </ul>
+            </div>
+            <div class="col-md-3">
+                <h4>Ressources</h4>
+                <ul class="footer-links">
+                    <li><a href="#"><i class="fas fa-book"></i> Documentation</a></li>
+                    <li><a href="#"><i class="fas fa-question-circle"></i> Aide</a></li>
+                    <li><a href="#"><i class="fas fa-info-circle"></i> À propos</a></li>
+                </ul>
+            </div>
+        </div>
+        <hr style="border-color: #555; margin: 20px 0;">
+        <div class="text-center">
+            <p>&copy; 2025 Paris 2024 - Tous droits réservés</p>
+            <div style="margin-top: 10px;">
+                <span style="display: inline-block; width: 10px; height: 10px; border-radius: 50%; background-color: var(--paris-blue); margin: 0 5px;"></span>
+                <span style="display: inline-block; width: 10px; height: 10px; border-radius: 50%; background-color: var(--paris-gold); margin: 0 5px;"></span>
+                <span style="display: inline-block; width: 10px; height: 10px; border-radius: 50%; background-color: var(--paris-green); margin: 0 5px;"></span>
+                <span style="display: inline-block; width: 10px; height: 10px; border-radius: 50%; background-color: var(--paris-red); margin: 0 5px;"></span>
+                <span style="display: inline-block; width: 10px; height: 10px; border-radius: 50%; background-color: var(--paris-purple); margin: 0 5px;"></span>
+            </div>
+        </div>
+    </div>
+</footer>
+
+<!-- Scripts -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/locales/bootstrap-datepicker.fr.min.js"></script>
+
+<!-- Custom JS -->
+<script>
+    $(document).ready(function(){
+        // Preview functionality
+        $("#titreInput, #contenuInput").on("keyup", function() {
+            updatePreview();
+        });
+
+        $("#sport, #epreuve, #dateActualiteInput").on("change", function() {
+            updatePreview();
+        });
+
+        function updatePreview() {
+            // Get values
+            var titre = $("#titreInput").val() || "Titre de l'actualité";
+            var contenu = $("#contenuInput").val() || "Aperçu du contenu de l'actualité...";
+            var sport = $("#sport option:selected").text();
+            var epreuve = $("#epreuve option:selected").text();
+            var date = $("#dateActualiteInput").val();
+
+            // Update preview
+            $(".preview-title").text(titre);
+            $(".preview-content").text(contenu);
+            if(sport && sport !== "Sélectionnez un sport") $(".preview-sport").text(sport).show();
+            if(epreuve && epreuve !== "Sélectionnez une épreuve") $(".preview-epreuve").text(epreuve).show();
+            if(date) $(".preview-date").text(date);
+        }
+    });
+
+    function showNotification(message, isError) {
+        const notification = document.getElementById('notification');
+        notification.textContent = message;
+        notification.style.display = 'block';
+
+        if (isError) {
+            notification.classList.add('error');
+        } else {
+            notification.classList.remove('error');
+        }
+
+        setTimeout(() => {
+            notification.style.opacity = '0';
+            setTimeout(() => {
+                notification.style.display = 'none';
+                notification.style.opacity = '1';
+            }, 500);
+        }, 3000);
+    }
+</script>
 </body>
 </html>
