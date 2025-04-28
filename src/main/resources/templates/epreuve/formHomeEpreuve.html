@@ -30,7 +30,7 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand paris-2024-logo" href="/">
+            <a class="navbar-brand" href="/">
                 <i class="fas fa-medal"></i> PARIS 2024
             </a>
         </div>
@@ -134,9 +134,6 @@
         <h3><i class="fas fa-calendar-alt"></i> Calendrier des épreuves</h3>
 
         <div class="timeline" style="position: relative; padding: 20px 0;">
-            <!-- Timeline axis -->
-            <div style="position: absolute; top: 40px; left: 0; right: 0; height: 4px; background-color: #eee; z-index: 1;"></div>
-
             <!-- Timeline points - Example, you'll need to calculate positions based on actual dates -->
             <div th:each="epreuve, iterStat : ${epreuves}"
                  style="position: relative; margin-bottom: 30px; padding-left: 50px;"

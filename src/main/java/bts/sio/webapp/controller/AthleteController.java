@@ -64,6 +64,9 @@ public class AthleteController {
     @GetMapping("/consulterAthlete/{id}")
     public String consulterAthlete(@PathVariable("id") final int id, Model model) {
         Athlete a = athleteservice.getAthlete(id);
+
+        System.out.println("Athlete's birth date: " + a.getDatenaiss());
+
         model.addAttribute("athlete", a);
         return "athlete/consulterAthlete";
     }

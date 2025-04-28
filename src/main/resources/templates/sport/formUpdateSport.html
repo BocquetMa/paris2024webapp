@@ -1,82 +1,164 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhml"
+<html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Paris 2024 - Modifier un sport</title>
 
-    <link rel="stylesheet"
-          href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
-          integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u"
-          crossorigin="anonymous">
-
-    <link rel="stylesheet"
-          href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css"
-          integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp"
-          crossorigin="anonymous">
-
-    <title>Paris 2024</title>
-
-    <style>
-        body {
-            padding-top: 50px;
-        }
-
-        .special {
-            padding-top: 50px;
-        }
-    </style>
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <!-- Custom CSS -->
+    <link rel="stylesheet" th:href="@{/css/main.css}">
 </head>
 <body>
+<div class="notification" id="notification"></div>
+<div class="page-decoration"></div>
 
+<!-- Navigation -->
 <nav class="navbar navbar-inverse navbar-fixed-top">
     <div class="container">
         <div class="navbar-header">
-            <a class="navbar-brand" href="..">Système de gestion des
-                spors</a>
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand paris-2024-logo" href="/">
+                <i class="fas fa-medal"></i> PARIS 2024
+            </a>
+        </div>
+        <div id="navbar" class="collapse navbar-collapse">
+            <ul class="nav navbar-nav">
+                <li><a href="/"><i class="fas fa-home"></i> Accueil</a></li>
+                <li><a href="/athletes"><i class="fas fa-running"></i> Athlètes</a></li>
+                <li class="active"><a href="/sports"><i class="fas fa-volleyball-ball"></i> Sports</a></li>
+                <li><a href="/epreuves"><i class="fas fa-trophy"></i> Épreuves</a></li>
+                <li><a href="/actualites"><i class="fas fa-newspaper"></i> Actualités</a></li>
+            </ul>
         </div>
     </div>
 </nav>
 
-
 <div class="container special">
+    <div class="card">
+        <div class="olympic-badge">
+            <div class="olympic-badge-green"></div>
+            <div class="olympic-badge-red"></div>
+        </div>
 
-    <h2 class="h2">Modification d'un sport</h2>
-    <div>
-        <form method="post"
-              th:action="@{/saveSport}" th:object="${sport}">
-            <div class="form-group">
-                <input
-                        type="hidden" th:field="*{id}" class="form-control">
-            </div>
-            <div class="form-group">
-                <label for="nomInput">Nom</label>
-                <input
-                        type="text" th:field="*{nom}" class="form-control" id="nomInputInput"
-                        aria-describedby="nomInputHelp" placeholder="Saisir le prénom"> <small
-                    id="nomInputHelp" class="form-text text-muted">Merci d'écrire le nom d'un sport.</small>
-            </div>
+        <h2 class="h2"><i class="fas fa-edit"></i> Modification d'un sport</h2>
 
-            <div class="form-group">
-                <label for="descriptifInput">Descriptif</label>
-                <input
-                        type="text" th:field="*{descriptif}" class="form-control" id="descriptifInputInput"
-                        aria-describedby="descriptifInputHelp" placeholder="Saisir le descriptif"> <small
-                    id="descriptifInputHelp" class="form-text text-muted">Merci d'écrire le descriptif d'un sport.</small>
-            </div>
+        <div class="row">
+            <div class="col-md-8 col-md-offset-2">
+                <form method="post" th:action="@{/saveSport}" th:object="${sport}" class="animate-fade-in">
+                    <div class="form-group">
+                        <input type="hidden" th:field="*{id}" class="form-control">
+                    </div>
 
-            <button type="submit" class="btn btn-primary">Modifier</button>
-        </form>
+                    <div class="form-group">
+                        <label for="nomInput"><i class="fas fa-volleyball-ball"></i> Nom du sport</label>
+                        <input type="text" th:field="*{nom}" class="form-control" id="nomInput"
+                               aria-describedby="nomHelp" placeholder="Entrez le nom du sport">
+                        <small id="nomHelp" class="form-text text-muted">Par exemple: Natation, Athlétisme, Basketball...</small>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="descriptifInput"><i class="fas fa-info-circle"></i> Description</label>
+                        <textarea th:field="*{descriptif}" class="form-control" id="descriptifInput"
+                                  aria-describedby="descriptifHelp" placeholder="Décrivez ce sport" rows="4"></textarea>
+                        <small id="descriptifHelp" class="form-text text-muted">Une brève description des règles et caractéristiques de ce sport.</small>
+                    </div>
+
+                    <div class="form-group" style="margin-top: 30px; text-align: center;">
+                        <button type="submit" class="btn btn-primary">
+                            <i class="fas fa-save"></i> Enregistrer les modifications
+                        </button>
+                        <a href="/sports" class="btn btn-default" style="margin-left: 10px;">
+                            <i class="fas fa-arrow-left"></i> Retour
+                        </a>
+                    </div>
+                </form>
+            </div>
+        </div>
     </div>
-
 </div>
 
-<script
-        src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
-<script
-        src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"
-        integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
-        crossorigin="anonymous"></script>
+<!-- Footer -->
+<footer class="footer">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6">
+                <div class="footer-logo">
+                    <i class="fas fa-medal"></i> PARIS 2024
+                </div>
+                <p>
+                    Plateforme de gestion officielle des athlètes, sports et épreuves des Jeux Olympiques Paris 2024.
+                </p>
+            </div>
+            <div class="col-md-3">
+                <h4>Liens rapides</h4>
+                <ul class="footer-links">
+                    <li><a href="/"><i class="fas fa-home"></i> Accueil</a></li>
+                    <li><a href="/athletes"><i class="fas fa-running"></i> Athlètes</a></li>
+                    <li><a href="/sports"><i class="fas fa-volleyball-ball"></i> Sports</a></li>
+                    <li><a href="/epreuves"><i class="fas fa-trophy"></i> Épreuves</a></li>
+                </ul>
+            </div>
+            <div class="col-md-3">
+                <h4>Ressources</h4>
+                <ul class="footer-links">
+                    <li><a href="#"><i class="fas fa-book"></i> Documentation</a></li>
+                    <li><a href="#"><i class="fas fa-question-circle"></i> Aide</a></li>
+                    <li><a href="#"><i class="fas fa-info-circle"></i> À propos</a></li>
+                </ul>
+            </div>
+        </div>
+        <hr style="border-color: #555; margin: 20px 0;">
+        <div class="text-center">
+            <p>&copy; 2025 Paris 2024 - Tous droits réservés</p>
+            <div style="margin-top: 10px;">
+                <span style="display: inline-block; width: 10px; height: 10px; border-radius: 50%; background-color: var(--paris-blue); margin: 0 5px;"></span>
+                <span style="display: inline-block; width: 10px; height: 10px; border-radius: 50%; background-color: var(--paris-gold); margin: 0 5px;"></span>
+                <span style="display: inline-block; width: 10px; height: 10px; border-radius: 50%; background-color: var(--paris-green); margin: 0 5px;"></span>
+                <span style="display: inline-block; width: 10px; height: 10px; border-radius: 50%; background-color: var(--paris-red); margin: 0 5px;"></span>
+                <span style="display: inline-block; width: 10px; height: 10px; border-radius: 50%; background-color: var(--paris-purple); margin: 0 5px;"></span>
+            </div>
+        </div>
+    </div>
+</footer>
+
+<!-- Scripts -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+<!-- Custom JS pour notifications -->
+<script>
+    function showNotification(message, isError) {
+        const notification = document.getElementById('notification');
+        notification.textContent = message;
+        notification.style.display = 'block';
+
+        if (isError) {
+            notification.classList.add('error');
+        } else {
+            notification.classList.remove('error');
+        }
+
+        setTimeout(() => {
+            notification.style.opacity = '0';
+            setTimeout(() => {
+                notification.style.display = 'none';
+                notification.style.opacity = '1';
+            }, 500);
+        }, 3000);
+    }
+</script>
 </body>
 </html>

@@ -1,110 +1,232 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhml"
-	xmlns:th="http://www.thymeleaf.org">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	  xmlns:th="http://www.thymeleaf.org">
 <head>
-<meta charset="UTF-8">
-<meta http-equiv="X-UA-Compatible" content="IE=edge">
-<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>Paris 2024 - Modifier un athlète</title>
 
-<link rel="stylesheet"
-	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
-	integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u"
-	crossorigin="anonymous">
-
-<link rel="stylesheet"
-	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css"
-	integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp"
-	crossorigin="anonymous">
-
-<title>Paris 2024</title>
-
-<style>
-body {
-	padding-top: 50px;
-}
-
-.special {
-	padding-top: 50px;
-}
-</style>
+	<!-- Bootstrap CSS -->
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+	<!-- Google Fonts -->
+	<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+	<!-- Font Awesome -->
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+	<!-- Custom CSS -->
+	<link rel="stylesheet" th:href="@{/css/main.css}">
 </head>
 <body>
+<div class="notification" id="notification"></div>
+<div class="page-decoration"></div>
 
-	<nav class="navbar navbar-inverse navbar-fixed-top">
-		<div class="container">
-			<div class="navbar-header">
-				<a class="navbar-brand" href="..">Système de gestion des
-					athlètes</a>
+<!-- Navigation -->
+<nav class="navbar navbar-inverse navbar-fixed-top">
+	<div class="container">
+		<div class="navbar-header">
+			<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar">
+				<span class="sr-only">Toggle navigation</span>
+				<span class="icon-bar"></span>
+				<span class="icon-bar"></span>
+				<span class="icon-bar"></span>
+			</button>
+			<a class="navbar-brand paris-2024-logo" href="/">
+				<i class="fas fa-medal"></i> PARIS 2024
+			</a>
+		</div>
+		<div id="navbar" class="collapse navbar-collapse">
+			<ul class="nav navbar-nav">
+				<li><a href="/"><i class="fas fa-home"></i> Accueil</a></li>
+				<li class="active"><a href="/"><i class="fas fa-running"></i> Athlètes</a></li>
+				<li><a href="/sports"><i class="fas fa-volleyball-ball"></i> Sports</a></li>
+				<li><a href="/epreuves"><i class="fas fa-trophy"></i> Épreuves</a></li>
+				<li><a href="/actualites"><i class="fas fa-newspaper"></i> Actualités</a></li>
+			</ul>
+		</div>
+	</div>
+</nav>
+
+<div class="container special">
+	<div class="card">
+		<div class="olympic-badge">
+			<div class="olympic-badge-green"></div>
+			<div class="olympic-badge-red"></div>
+		</div>
+
+		<h2 class="h2"><i class="fas fa-edit"></i> Modification d'un athlète</h2>
+
+		<div class="row">
+			<div class="col-md-8 col-md-offset-2">
+				<form method="post" th:action="@{/saveAthlete}" th:object="${athlete}" class="animate-fade-in">
+					<div class="form-group">
+						<input type="hidden" th:field="*{id}" class="form-control">
+					</div>
+
+					<div class="row">
+						<div class="col-md-6">
+							<div class="form-group">
+								<label for="prenomInput"><i class="fas fa-user"></i> Prénom</label>
+								<input type="text" th:field="*{prenom}" class="form-control" id="prenomInput"
+									   aria-describedby="prenomHelp" placeholder="Saisir le prénom">
+								<small id="prenomHelp" class="form-text text-muted">Prénom de l'athlète</small>
+							</div>
+						</div>
+						<div class="col-md-6">
+							<div class="form-group">
+								<label for="nomInput"><i class="fas fa-user"></i> Nom</label>
+								<input type="text" th:field="*{nom}" class="form-control" id="nomInput"
+									   aria-describedby="nomHelp" placeholder="Saisir le nom">
+								<small id="nomHelp" class="form-text text-muted">Nom de famille de l'athlète</small>
+							</div>
+						</div>
+					</div>
+
+					<div class="form-group">
+						<label for="dateNaissInput"><i class="fas fa-calendar-alt"></i> Date de naissance</label>
+						<input type="date" th:field="*{datenaiss}" class="form-control" id="dateNaissInput"
+							   aria-describedby="dateNaissHelp">
+						<small id="dateNaissHelp" class="form-text text-muted">Date de naissance au format JJ/MM/AAAA</small>
+					</div>
+
+					<div class="row">
+						<div class="col-md-6">
+							<div class="form-group">
+								<label for="pays"><i class="fas fa-flag"></i> Pays</label>
+								<select id="pays" class="form-control" th:field="*{pays.id}">
+									<option value="">Sélectionnez un pays</option>
+									<option th:each="pays : ${listPays}" th:value="${pays.id}" th:text="${pays.nom}"></option>
+								</select>
+								<small class="form-text text-muted">Pays que l'athlète représente</small>
+							</div>
+						</div>
+						<div class="col-md-6">
+							<div class="form-group">
+								<label for="sport"><i class="fas fa-volleyball-ball"></i> Sport</label>
+								<select id="sport" class="form-control" th:field="*{sport.id}">
+									<option value="">Sélectionnez un sport</option>
+									<option th:each="sport : ${listSport}" th:value="${sport.id}" th:text="${sport.nom}"></option>
+								</select>
+								<small class="form-text text-muted">Discipline principale de l'athlète</small>
+							</div>
+						</div>
+					</div>
+
+					<div class="form-group" style="margin-top: 30px; text-align: center;">
+						<button type="submit" class="btn btn-primary">
+							<i class="fas fa-save"></i> Enregistrer les modifications
+						</button>
+						<a href="/" class="btn btn-default" style="margin-left: 10px;">
+							<i class="fas fa-arrow-left"></i> Retour
+						</a>
+					</div>
+				</form>
 			</div>
 		</div>
-	</nav>
-
-
-	<div class="container special">
-
-		<h2 class="h2">Modification d'un athlète</h2>
-		<div>
-			<form method="post"
-				th:action="@{/saveAthlete}" th:object="${athlete}">
-				<div class="form-group">
-					<input
-						type="hidden" th:field="*{id}" class="form-control">
-				</div>
-				<div class="form-group">
-					<label for="prenomInput">Prénom</label>
-					<input
-						type="text" th:field="*{prenom}" class="form-control" id="prenomInputInput"
-						aria-describedby="prenomInputHelp" placeholder="Saisir le prénom"> <small
-						id="prenomInputHelp" class="form-text text-muted">Merci d'écrire le prénom de l'athlète.</small>
-				</div>
-
-				<div class="form-group">
-					<label for="nomInput">Nom</label>
-					<input
-							type="text" th:field="*{nom}" class="form-control" id="nomInputInput"
-							aria-describedby="nomInputHelp" placeholder="Saisir le nom"> <small
-						id="nomInputHelp" class="form-text text-muted">Merci d'écrire le nom de l'athlète.</small>
-				</div>
-
-				<div class="form-group">
-					<label for="dateNaissInput">Date Naissance</label>
-					<input
-							type="date" th:field="*{datenaiss}" class="form-control" id="dateNaissInputInput"
-							aria-describedby="dateNaissInputHelp" placeholder="Saisir la date de naissance"> <small
-						id="dateNaissInputHelp" class="form-text text-muted">Merci d'écrire la date de naissance de l'athlète.</small>
-				</div>
-
-
-				<div class="form-group">
-					<label for="pays">Pays :</label>
-
-					<select id="pays" class="form-control" th:field="*{pays.id}">
-						<option value=""></option>
-						<option th:each="pays : ${listPays}" th:value="${pays.id}" th:text="${pays.nom}"></option>
-					</select>
-				</div>
-
-				<div class="form-group">
-					<label for="sport">Sport :</label>
-
-					<select id="sport" class="form-control" th:field="*{sport.id}">
-						<option value=""></option>
-						<option th:each="sport : ${listSport}" th:value="${sport.id}" th:text="${sport.nom}"></option>
-					</select>
-				</div>
-
-				
-				<button type="submit" class="btn btn-primary">Modifier</button>
-			</form>
-		</div>
-
 	</div>
 
-	<script
-		src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
-	<script
-		src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"
-		integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
-		crossorigin="anonymous"></script>
+	<!-- Profil athlète -->
+	<div class="card" style="margin-top: 20px; background-color: rgba(44, 132, 203, 0.05);">
+		<h3><i class="fas fa-id-card"></i> Informations athlète</h3>
+		<div class="row">
+			<div class="col-md-4 text-center">
+				<div class="athlete-avatar" style="margin: 0 auto 20px; width: 100px; height: 100px; background: #f0f0f0; border-radius: 50%; display: flex; align-items: center; justify-content: center;">
+					<i class="fas fa-user" style="font-size: 40px; color: #ccc;"></i>
+				</div>
+				<div>
+					<p><i class="fas fa-medal" style="color: var(--paris-gold);"></i> Médailles précédentes</p>
+					<p><i class="fas fa-calendar-check"></i> Participations passées</p>
+				</div>
+			</div>
+			<div class="col-md-8">
+				<div class="row">
+					<div class="col-md-6">
+						<div style="border-left: 3px solid var(--paris-blue); padding-left: 15px; margin-bottom: 15px;">
+							<p><strong><i class="fas fa-info-circle"></i> ID Athlète:</strong> <span th:text="${athlete.id}">ID</span></p>
+							<p><strong><i class="fas fa-flag"></i> Pays:</strong> <span th:text="${athlete.pays != null ? athlete.pays.nom : '-'}">Pays</span></p>
+							<p><strong><i class="fas fa-volleyball-ball"></i> Sport:</strong> <span th:text="${athlete.sport != null ? athlete.sport.nom : '-'}">Sport</span></p>
+						</div>
+					</div>
+					<div class="col-md-6">
+						<div style="border-left: 3px solid var(--paris-green); padding-left: 15px; margin-bottom: 15px;">
+							<p><strong><i class="fas fa-calendar-alt"></i> Âge:</strong> <span th:if="${athlete.datenaiss != null}" th:text="${#temporals.year(#temporals.createNow()) - #temporals.year(athlete.datenaiss)}">Age</span></p>
+							<p><strong><i class="fas fa-trophy"></i> Épreuves:</strong> <span th:if="${athlete.epreuves != null && !athlete.epreuves.empty}" th:text="${athlete.epreuves.size()}">0</span><span th:if="${athlete.epreuves == null || athlete.epreuves.empty}">0</span></p>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+<!-- Footer -->
+<footer class="footer">
+	<div class="container">
+		<div class="row">
+			<div class="col-md-6">
+				<div class="footer-logo">
+					<i class="fas fa-medal"></i> PARIS 2024
+				</div>
+				<p>
+					Plateforme de gestion officielle des athlètes, sports et épreuves des Jeux Olympiques Paris 2024.
+				</p>
+			</div>
+			<div class="col-md-3">
+				<h4>Liens rapides</h4>
+				<ul class="footer-links">
+					<li><a href="/"><i class="fas fa-home"></i> Accueil</a></li>
+					<li><a href="/athletes"><i class="fas fa-running"></i> Athlètes</a></li>
+					<li><a href="/sports"><i class="fas fa-volleyball-ball"></i> Sports</a></li>
+					<li><a href="/epreuves"><i class="fas fa-trophy"></i> Épreuves</a></li>
+				</ul>
+			</div>
+			<div class="col-md-3">
+				<h4>Ressources</h4>
+				<ul class="footer-links">
+					<li><a href="#"><i class="fas fa-book"></i> Documentation</a></li>
+					<li><a href="#"><i class="fas fa-question-circle"></i> Aide</a></li>
+					<li><a href="#"><i class="fas fa-info-circle"></i> À propos</a></li>
+				</ul>
+			</div>
+		</div>
+		<hr style="border-color: #555; margin: 20px 0;">
+		<div class="text-center">
+			<p>&copy; 2025 Paris 2024 - Tous droits réservés</p>
+			<div style="margin-top: 10px;">
+				<span style="display: inline-block; width: 10px; height: 10px; border-radius: 50%; background-color: var(--paris-blue); margin: 0 5px;"></span>
+				<span style="display: inline-block; width: 10px; height: 10px; border-radius: 50%; background-color: var(--paris-gold); margin: 0 5px;"></span>
+				<span style="display: inline-block; width: 10px; height: 10px; border-radius: 50%; background-color: var(--paris-green); margin: 0 5px;"></span>
+				<span style="display: inline-block; width: 10px; height: 10px; border-radius: 50%; background-color: var(--paris-red); margin: 0 5px;"></span>
+				<span style="display: inline-block; width: 10px; height: 10px; border-radius: 50%; background-color: var(--paris-purple); margin: 0 5px;"></span>
+			</div>
+		</div>
+	</div>
+</footer>
+
+<!-- Scripts -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+<!-- Custom JS pour notifications -->
+<script>
+	function showNotification(message, isError) {
+		const notification = document.getElementById('notification');
+		notification.textContent = message;
+		notification.style.display = 'block';
+
+		if (isError) {
+			notification.classList.add('error');
+		} else {
+			notification.classList.remove('error');
+		}
+
+		setTimeout(() => {
+			notification.style.opacity = '0';
+			setTimeout(() => {
+				notification.style.display = 'none';
+				notification.style.opacity = '1';
+			}, 500);
+		}, 3000);
+	}
+</script>
 </body>
 </html>

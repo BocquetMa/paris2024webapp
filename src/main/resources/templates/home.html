@@ -30,7 +30,7 @@
 				<span class="icon-bar"></span>
 				<span class="icon-bar"></span>
 			</button>
-			<a class="navbar-brand paris-2024-logo" href="/">
+			<a class="navbar-brand" href="/">
 				<i class="fas fa-medal"></i> PARIS 2024
 			</a>
 		</div>
@@ -88,6 +88,12 @@
 		</div>
 	</div>
 
+	<div style="margin-bottom: 20px;">
+		<a th:href="@{/createAthlete}" class="btn btn-primary">
+			<i class="fas fa-plus"></i> Ajouter un nouvel athlète
+		</a>
+	</div>
+
 	<!-- Athletes List -->
 	<div class="card">
 		<div class="olympic-badge">
@@ -136,9 +142,6 @@
 				</tbody>
 			</table>
 		</div>
-		<a th:href="@{/createAthlete}" class="btn btn-primary">
-			<i class="fas fa-plus"></i> Ajouter un nouvel athlète
-		</a>
 	</div>
 </div>
 

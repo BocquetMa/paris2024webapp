@@ -1,24 +1,229 @@
 <!DOCTYPE html>
-<html lang="fr">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Détails de l'actualité</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Paris 2024 - Détails de l'actualité</title>
+
+    <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <!-- Custom CSS -->
+    <link rel="stylesheet" th:href="@{/css/main.css}">
 </head>
 <body>
+<div class="notification" id="notification"></div>
+<div class="page-decoration"></div>
 
-<div class="container" style="padding-top: 70px;">
-    <h2>Détails de l'Actualité</h2>
-    <div class="well">
-        <h4>Titre : <span th:text="${actualite.titre}">Titre</span></h4>
-        <h4>Contenu : <span th:text="${actualite.contenu}">Contenu</span></h4>
-        <h4>Date : <span th:text="${#temporals.format(actualite.dateActualite, 'dd-MM-yyyy')}">Date</span></h4>
-        <h4>Sport : <span th:text="${actualite.sport.nom}">Nom du sport</span></h4>
-        <h4>Epreuve : <span th:text="${actualite.epreuve.libelle}">Nom du sport</span></h4>
+<!-- Navigation -->
+<nav class="navbar navbar-inverse navbar-fixed-top">
+    <div class="container">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand paris-2024-logo" href="/">
+                <i class="fas fa-medal"></i> PARIS 2024
+            </a>
+        </div>
+        <div id="navbar" class="collapse navbar-collapse">
+            <ul class="nav navbar-nav">
+                <li><a href="/"><i class="fas fa-home"></i> Accueil</a></li>
+                <li><a href="/"><i class="fas fa-running"></i> Athlètes</a></li>
+                <li><a href="/sports"><i class="fas fa-volleyball-ball"></i> Sports</a></li>
+                <li><a href="/epreuves"><i class="fas fa-trophy"></i> Épreuves</a></li>
+                <li class="active"><a href="/actualites"><i class="fas fa-newspaper"></i> Actualités</a></li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+<div class="container special">
+    <!-- Header with image -->
+    <div class="card" style="padding: 0; overflow: hidden; margin-bottom: 30px;">
+        <div style="height: 200px; background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), url('https://picsum.photos/1200/400') no-repeat center center; background-size: cover; display: flex; align-items: center; justify-content: center; position: relative;">
+            <div style="position: absolute; top: 20px; left: 20px; background-color: var(--paris-gold); color: white; padding: 5px 15px; border-radius: 20px; font-weight: 500; display: inline-flex; align-items: center;">
+                <i class="fas fa-calendar-alt" style="margin-right: 8px;"></i>
+                <span th:text="${#temporals.format(actualite.dateActualite, 'dd MMMM yyyy')}">12 juillet 2024</span>
+            </div>
+            <div style="text-align: center; color: white; max-width: 80%; z-index: 1;">
+                <h1 th:text="${actualite.titre}" style="font-weight: 700; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 15px; font-size: 2.2rem;">Titre de l'actualité</h1>
+                <div>
+                    <span class="badge" style="background-color: var(--paris-blue); margin-right: 10px; padding: 5px 10px; font-size: 0.9rem;">
+                        <i class="fas fa-volleyball-ball" style="margin-right: 5px;"></i>
+                        <span th:text="${actualite.sport.nom}">Sport</span>
+                    </span>
+                    <span class="badge" style="background-color: var(--paris-green); padding: 5px 10px; font-size: 0.9rem;">
+                        <i class="fas fa-trophy" style="margin-right: 5px;"></i>
+                        <span th:text="${actualite.epreuve.libelle}">Épreuve</span>
+                    </span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <!-- Main content -->
+        <div class="col-md-8">
+            <div class="card">
+                <div class="olympic-badge">
+                    <div class="olympic-badge-green"></div>
+                    <div class="olympic-badge-red"></div>
+                </div>
+                <h2 class="h2"><i class="fas fa-newspaper"></i> Contenu de l'actualité</h2>
+
+                <div class="article-content animate-fade-in" style="font-size: 1.1rem; line-height: 1.8; margin-bottom: 30px;">
+                    <p th:text="${actualite.contenu}" style="margin-bottom: 20px;">
+                        Contenu de l'actualité...
+                    </p>
+
+                    <!-- Placeholder for when content is short -->
+                    <div th:if="${#strings.length(actualite.contenu) < 150}" style="background-color: #f9f9f9; padding: 20px; border-radius: 5px; margin-top: 30px; text-align: center;">
+                        <i class="fas fa-info-circle" style="font-size: 2rem; color: var(--paris-blue); margin-bottom: 10px;"></i>
+                        <p>Cette actualité sera complétée prochainement avec plus de détails.</p>
+                    </div>
+                </div>
+
+                <!-- Actions buttons -->
+                <div style="margin-top: 40px; display: flex; justify-content: space-between;">
+                    <a href="/actualites" class="btn btn-default">
+                        <i class="fas fa-arrow-left"></i> Retour aux actualités
+                    </a>
+                    <div>
+                        <a th:href="@{/updateActualite/{id}(id=${actualite.id})}" class="btn btn-info">
+                            <i class="fas fa-edit"></i> Modifier
+                        </a>
+                        <button class="btn btn-primary" style="margin-left: 10px;" onclick="window.print();">
+                            <i class="fas fa-print"></i> Imprimer
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Sidebar -->
+        <div class="col-md-4">
+            <!-- Info card -->
+            <div class="card" style="margin-bottom: 20px;">
+                <h3><i class="fas fa-info-circle"></i> Informations</h3>
+                <ul style="list-style: none; padding-left: 0;">
+                    <li style="padding: 10px 0; border-bottom: 1px solid #eee;">
+                        <i class="fas fa-calendar-alt" style="width: 20px; color: var(--paris-blue);"></i>
+                        <strong>Date :</strong>
+                        <span th:text="${#temporals.format(actualite.dateActualite, 'dd MMMM yyyy')}">Date</span>
+                    </li>
+                    <li style="padding: 10px 0; border-bottom: 1px solid #eee;">
+                        <i class="fas fa-volleyball-ball" style="width: 20px; color: var(--paris-green);"></i>
+                        <strong>Sport :</strong>
+                        <span th:text="${actualite.sport.nom}">Sport</span>
+                    </li>
+                    <li style="padding: 10px 0; border-bottom: 1px solid #eee;">
+                        <i class="fas fa-trophy" style="width: 20px; color: var(--paris-gold);"></i>
+                        <strong>Épreuve :</strong>
+                        <span th:text="${actualite.epreuve.libelle}">Épreuve</span>
+                    </li>
+                    <li style="padding: 10px 0;">
+                        <i class="fas fa-hashtag" style="width: 20px; color: var(--paris-red);"></i>
+                        <strong>ID :</strong>
+                        <span th:text="${actualite.id}">ID</span>
+                    </li>
+                </ul>
+            </div>
+
+            <!-- Related news -->
+            <div class="card">
+                <h3><i class="fas fa-link"></i> Actualités liées</h3>
+                <p style="font-style: italic; color: #888;">Actualités concernant le même sport ou la même épreuve</p>
+
+                <div style="background-color: #f9f9f9; padding: 15px; border-radius: 5px; text-align: center;">
+                    <i class="fas fa-newspaper" style="font-size: 2rem; color: var(--paris-blue); margin-bottom: 10px;"></i>
+                    <p>Consultez d'autres actualités sur la page principale.</p>
+                    <a href="/actualites" class="btn btn-sm btn-primary" style="margin-top: 10px;">
+                        <i class="fas fa-list"></i> Voir toutes les actualités
+                    </a>
+                </div>
+            </div>
+        </div>
     </div>
 </div>
 
+<!-- Footer -->
+<footer class="footer">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6">
+                <div class="footer-logo">
+                    <i class="fas fa-medal"></i> PARIS 2024
+                </div>
+                <p>
+                    Plateforme de gestion officielle des athlètes, sports et épreuves des Jeux Olympiques Paris 2024.
+                </p>
+            </div>
+            <div class="col-md-3">
+                <h4>Liens rapides</h4>
+                <ul class="footer-links">
+                    <li><a href="/"><i class="fas fa-home"></i> Accueil</a></li>
+                    <li><a href="/athletes"><i class="fas fa-running"></i> Athlètes</a></li>
+                    <li><a href="/sports"><i class="fas fa-volleyball-ball"></i> Sports</a></li>
+                    <li><a href="/epreuves"><i class="fas fa-trophy"></i> Épreuves</a></li>
+                </ul>
+            </div>
+            <div class="col-md-3">
+                <h4>Ressources</h4>
+                <ul class="footer-links">
+                    <li><a href="#"><i class="fas fa-book"></i> Documentation</a></li>
+                    <li><a href="#"><i class="fas fa-question-circle"></i> Aide</a></li>
+                    <li><a href="#"><i class="fas fa-info-circle"></i> À propos</a></li>
+                </ul>
+            </div>
+        </div>
+        <hr style="border-color: #555; margin: 20px 0;">
+        <div class="text-center">
+            <p>&copy; 2025 Paris 2024 - Tous droits réservés</p>
+            <div style="margin-top: 10px;">
+                <span style="display: inline-block; width: 10px; height: 10px; border-radius: 50%; background-color: var(--paris-blue); margin: 0 5px;"></span>
+                <span style="display: inline-block; width: 10px; height: 10px; border-radius: 50%; background-color: var(--paris-gold); margin: 0 5px;"></span>
+                <span style="display: inline-block; width: 10px; height: 10px; border-radius: 50%; background-color: var(--paris-green); margin: 0 5px;"></span>
+                <span style="display: inline-block; width: 10px; height: 10px; border-radius: 50%; background-color: var(--paris-red); margin: 0 5px;"></span>
+                <span style="display: inline-block; width: 10px; height: 10px; border-radius: 50%; background-color: var(--paris-purple); margin: 0 5px;"></span>
+            </div>
+        </div>
+    </div>
+</footer>
+
+<!-- Scripts -->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+<!-- Custom JS pour notifications -->
+<script>
+    function showNotification(message, isError) {
+        const notification = document.getElementById('notification');
+        notification.textContent = message;
+        notification.style.display = 'block';
+
+        if (isError) {
+            notification.classList.add('error');
+        } else {
+            notification.classList.remove('error');
+        }
+
+        setTimeout(() => {
+            notification.style.opacity = '0';
+            setTimeout(() => {
+                notification.style.display = 'none';
+                notification.style.opacity = '1';
+            }, 500);
+        }, 3000);
+    }
+</script>
 </body>
 </html>

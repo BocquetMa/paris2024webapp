@@ -1,90 +1,213 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhml"
+<html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Paris 2024 - Modifier une épreuve</title>
 
-    <link rel="stylesheet"
-          href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
-          integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u"
-          crossorigin="anonymous">
-
-    <link rel="stylesheet"
-          href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css"
-          integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp"
-          crossorigin="anonymous">
-
-    <title>Paris 2024</title>
-
-    <style>
-        body {
-            padding-top: 50px;
-        }
-
-        .special {
-            padding-top: 50px;
-        }
-    </style>
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <!-- Custom CSS -->
+    <link rel="stylesheet" th:href="@{/css/main.css}">
+    <!-- Datepicker CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/css/bootstrap-datepicker.min.css">
 </head>
 <body>
+<div class="notification" id="notification"></div>
+<div class="page-decoration"></div>
 
+<!-- Navigation -->
 <nav class="navbar navbar-inverse navbar-fixed-top">
     <div class="container">
         <div class="navbar-header">
-            <a class="navbar-brand" href="..">Système de gestion des
-                épreuves</a>
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand paris-2024-logo" href="/"><i class="fas fa-medal"></i> PARIS 2024</a>
+        </div>
+        <div id="navbar" class="collapse navbar-collapse">
+            <ul class="nav navbar-nav">
+                <li><a href="/"><i class="fas fa-home"></i> Accueil</a></li>
+                <li><a href="/athletes"><i class="fas fa-running"></i> Athlètes</a></li>
+                <li><a href="/sports"><i class="fas fa-volleyball-ball"></i> Sports</a></li>
+                <li class="active"><a href="/epreuves"><i class="fas fa-trophy"></i> Épreuves</a></li>
+                <li><a href="/actualites"><i class="fas fa-newspaper"></i> Actualités</a></li>
+            </ul>
         </div>
     </div>
 </nav>
 
-
 <div class="container special">
+    <div class="card">
+        <div class="olympic-badge">
+            <div class="olympic-badge-green"></div>
+            <div class="olympic-badge-red"></div>
+        </div>
 
-    <h2 class="h2">Modification d'une épreuve</h2>
-    <div>
-        <form method="post"
-              th:action="@{/saveEpreuve}" th:object="${epreuve}">
-            <div class="form-group">
-                <input
-                        type="hidden" th:field="*{id}" class="form-control">
-            </div>
-            <div class="form-group">
-                <label for="libelleInput">Nom</label>
-                <input
-                        type="text" th:field="*{libelle}" class="form-control" id="libelleInputInput"
-                        aria-describedby="libelleInputHelp" placeholder="Saisir le libelle"> <small
-                    id="libelleInputHelp" class="form-text text-muted">Merci d'écrire le libelle d'une épreuve.</small>
-            </div>
+        <h2 class="h2"><i class="fas fa-edit"></i> Modification d'une épreuve</h2>
 
-            <div class="form-group">
-                <label for="date_debutInput">Date de début</label>
-                <input
-                        type="text" th:field="*{dateDebut}" class="form-control" id="date_debutInputInput"
-                        aria-describedby="date_debutInputHelp" placeholder="Saisir la date début"> <small
-                    id="date_debutInputHelp" class="form-text text-muted">Merci d'écrire la date de début d'une épreuve.</small>
-            </div>
+        <div class="row">
+            <div class="col-md-8 col-md-offset-2">
+                <form method="post" th:action="@{/saveEpreuve}" th:object="${epreuve}" class="animate-fade-in">
+                    <div class="form-group">
+                        <input type="hidden" th:field="*{id}" class="form-control">
+                    </div>
 
-            <div class="form-group">
-                <label for="date_finInput">Date de fin</label>
-                <input
-                        type="text" th:field="*{dateFin}" class="form-control" id="date_finInputInput"
-                        aria-describedby="date_finInputHelp" placeholder="Saisir la date fin"> <small
-                    id="date_finInputHelp" class="form-text text-muted">Merci d'écrire la date de fin d'une épreuve.</small>
-            </div>
+                    <div class="form-group">
+                        <label for="libelleInput"><i class="fas fa-trophy"></i> Libellé de l'épreuve</label>
+                        <input type="text" th:field="*{libelle}" class="form-control" id="libelleInput"
+                               aria-describedby="libelleHelp" placeholder="Entrez le libellé de l'épreuve">
+                        <small id="libelleHelp" class="form-text text-muted">Par exemple: 100m nage libre, Marathon hommes, Tennis double mixte...</small>
+                    </div>
 
-            <button type="submit" class="btn btn-primary">Modifier</button>
-        </form>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="date_debutInput"><i class="fas fa-calendar-check"></i> Date de début</label>
+                                <div class="input-group date">
+                                    <input type="text" th:field="*{dateDebut}" class="form-control datepicker" id="date_debutInput"
+                                           aria-describedby="date_debutHelp" placeholder="JJ/MM/AAAA">
+                                    <div class="input-group-addon">
+                                        <span class="glyphicon glyphicon-calendar"></span>
+                                    </div>
+                                </div>
+                                <small id="date_debutHelp" class="form-text text-muted">Date de commencement de l'épreuve</small>
+                            </div>
+                        </div>
+
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="date_finInput"><i class="fas fa-calendar-times"></i> Date de fin</label>
+                                <div class="input-group date">
+                                    <input type="text" th:field="*{dateFin}" class="form-control datepicker" id="date_finInput"
+                                           aria-describedby="date_finHelp" placeholder="JJ/MM/AAAA">
+                                    <div class="input-group-addon">
+                                        <span class="glyphicon glyphicon-calendar"></span>
+                                    </div>
+                                </div>
+                                <small id="date_finHelp" class="form-text text-muted">Date de fin de l'épreuve</small>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group" style="margin-top: 30px; text-align: center;">
+                        <button type="submit" class="btn btn-primary">
+                            <i class="fas fa-save"></i> Enregistrer les modifications
+                        </button>
+                        <a href="/epreuves" class="btn btn-default" style="margin-left: 10px;">
+                            <i class="fas fa-arrow-left"></i> Retour
+                        </a>
+                    </div>
+                </form>
+            </div>
+        </div>
     </div>
 
+    <!-- Calendar preview -->
+    <div class="card" style="margin-top: 20px; background-color: rgba(44, 132, 203, 0.05);">
+        <h3><i class="fas fa-calendar-alt"></i> Calendrier des épreuves</h3>
+
+        <p style="margin-bottom: 20px;">Les modifications apportées à cette épreuve apparaîtront dans le calendrier général des Jeux Olympiques Paris 2024.</p>
+
+        <div style="background: #f9f9f9; border-radius: 8px; padding: 10px; text-align: center; color: #666;">
+            <i class="fas fa-calendar-week" style="font-size: 2rem; color: var(--paris-blue); margin-bottom: 10px;"></i>
+            <p>Visualisation du calendrier disponible après avoir enregistré l'épreuve.</p>
+        </div>
+    </div>
 </div>
 
-<script
-        src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
-<script
-        src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"
-        integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
-        crossorigin="anonymous"></script>
+<!-- Footer -->
+<footer class="footer">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6">
+                <div class="footer-logo">
+                    <i class="fas fa-medal"></i> PARIS 2024
+                </div>
+                <p>
+                    Plateforme de gestion officielle des athlètes, sports et épreuves des Jeux Olympiques Paris 2024.
+                </p>
+            </div>
+            <div class="col-md-3">
+                <h4>Liens rapides</h4>
+                <ul class="footer-links">
+                    <li><a href="/"><i class="fas fa-home"></i> Accueil</a></li>
+                    <li><a href="/athletes"><i class="fas fa-running"></i> Athlètes</a></li>
+                    <li><a href="/sports"><i class="fas fa-volleyball-ball"></i> Sports</a></li>
+                    <li><a href="/epreuves"><i class="fas fa-trophy"></i> Épreuves</a></li>
+                </ul>
+            </div>
+            <div class="col-md-3">
+                <h4>Ressources</h4>
+                <ul class="footer-links">
+                    <li><a href="#"><i class="fas fa-book"></i> Documentation</a></li>
+                    <li><a href="#"><i class="fas fa-question-circle"></i> Aide</a></li>
+                    <li><a href="#"><i class="fas fa-info-circle"></i> À propos</a></li>
+                </ul>
+            </div>
+        </div>
+        <hr style="border-color: #555; margin: 20px 0;">
+        <div class="text-center">
+            <p>&copy; 2025 Paris 2024 - Tous droits réservés</p>
+            <div style="margin-top: 10px;">
+                <span style="display: inline-block; width: 10px; height: 10px; border-radius: 50%; background-color: var(--paris-blue); margin: 0 5px;"></span>
+                <span style="display: inline-block; width: 10px; height: 10px; border-radius: 50%; background-color: var(--paris-gold); margin: 0 5px;"></span>
+                <span style="display: inline-block; width: 10px; height: 10px; border-radius: 50%; background-color: var(--paris-green); margin: 0 5px;"></span>
+                <span style="display: inline-block; width: 10px; height: 10px; border-radius: 50%; background-color: var(--paris-red); margin: 0 5px;"></span>
+                <span style="display: inline-block; width: 10px; height: 10px; border-radius: 50%; background-color: var(--paris-purple); margin: 0 5px;"></span>
+            </div>
+        </div>
+    </div>
+</footer>
+
+<!-- Scripts -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/locales/bootstrap-datepicker.fr.min.js"></script>
+
+<!-- Custom JS pour datepicker et notifications -->
+<script>
+    $(document).ready(function(){
+        // Initialize datepickers with French localization
+        $('.datepicker').datepicker({
+            format: 'dd/mm/yyyy',
+            autoclose: true,
+            todayHighlight: true,
+            language: 'fr',
+            startDate: '01/07/2024',
+            endDate: '15/08/2024'
+        });
+    });
+
+    function showNotification(message, isError) {
+        const notification = document.getElementById('notification');
+        notification.textContent = message;
+        notification.style.display = 'block';
+
+        if (isError) {
+            notification.classList.add('error');
+        } else {
+            notification.classList.remove('error');
+        }
+
+        setTimeout(() => {
+            notification.style.opacity = '0';
+            setTimeout(() => {
+                notification.style.display = 'none';
+                notification.style.opacity = '1';
+            }, 500);
+        }, 3000);
+    }
+</script>
 </body>
 </html>

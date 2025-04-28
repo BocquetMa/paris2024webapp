@@ -60,6 +60,13 @@ public class AthleteProxy {
                 Athlete.class
         );
 
+        System.out.println("API Response: " + response.getStatusCode());
+        Athlete athlete = response.getBody();
+
+        if (athlete != null) {
+            System.out.println("Fetched athlete: " + athlete.getNom() + " " + athlete.getPrenom() + " Date of Birth: " + athlete.getDatenaiss());
+        }
+
         log.debug("Get Athlete call " + response.getStatusCode().toString());
 
         return response.getBody();
