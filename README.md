@@ -1,3 +1,11 @@
+# 🏅 Paris 2024 - Système de Gestion
+
+Application complète pour l'administration des Jeux Olympiques de Paris 2024, composée de deux parties distinctes :  
+- **Backend API RESTful** développée en Spring Boot  
+- **Frontend web** développé avec Thymeleaf et Bootstrap  
+
+---
+
 ## Partie 2 – Frontend Web
 
 ### Description
